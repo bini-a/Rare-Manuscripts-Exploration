@@ -14,7 +14,7 @@ pd.set_option("display.max_row", None)
 # st.set_option('deprecation.showPyplotGlobalUse', False)
 st.title("Rubenstien Library Catalog")
 
-@st.cache  # 👈 Added this
+@st.cache 
 def myfunc():
     df = pd.read_csv("all_sorted_collection.csv")
     return df
