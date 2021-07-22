@@ -12,7 +12,7 @@ pd.set_option("display.max_row", None)
 
 
 # st.set_option('deprecation.showPyplotGlobalUse', False)
-st.title("Rubenstien Library Catalog")
+st.title("Rubenstein Library Catalog")
 
 @st.cache  # 👈 Added this
 def myfunc():
