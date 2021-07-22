@@ -114,7 +114,7 @@ import gender_guesser.detector as gender
 
 st.title("Gender Distribution | Distribution over time")
 st.title("Spatial Disribution")
-st.title("Topics")
+st.title("Topics ")
 st.subheader("Duke University/Presidents")
 st.subheader("Race Related Collections")
 st.subheader("Civil War")
