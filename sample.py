@@ -29,7 +29,7 @@ def myfunc():
     df = pd.read_csv("all_sorted_collection.csv")
     return df
 df = myfunc()
-st.write(df)
+st.write(df.head())
 
 @st.cache
 def explore_profile(df):
