@@ -6,20 +6,30 @@ import matplotlib.pyplot as plt
 import numpy as np
 from pandas_profiling import ProfileReport
 from streamlit_pandas_profiling import st_profile_report
+import plotly.express as px
+# WordCloud 
+from wordcloud import WordCloud, ImageColorGenerator
+import re
+from num2words import num2words
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+import gender_guesser.detector as gender
 
-pd.set_option('display.max_colwidth', None)
-pd.set_option("display.max_row", None)
+
+
+# pd.set_option('display.max_colwidth', None)
+# pd.set_option("display.max_row", None)
 
 
 # st.set_option('deprecation.showPyplotGlobalUse', False)
 st.title("Rubenstein Library Catalog")
 
-@st.cache  # 👈 Added this
+@st.cache 
 def myfunc():
     df = pd.read_csv("all_sorted_collection.csv")
     return df
 df = myfunc()
-st.write(df)
+st.write(df.head())
 
 @st.cache
 def explore_profile(df):
@@ -47,7 +57,6 @@ def hist_vis(fig):
 hist_vis(fig1)
 st.pyplot(fig1)
 
-import plotly.express as px
 fig3= px.histogram(df_year, x="Start",width=800, height = 400,histnorm='percent',nbins=36)
 # fig3.layout.yaxis.tickformat = ',.0%'
 
@@ -59,12 +68,7 @@ fig2= plt.figure(2,figsize=(15,5))
 
 
 
-# WordCloud 
-from wordcloud import WordCloud, ImageColorGenerator
-import re
-from num2words import num2words
-from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
+
 def black_color_func(word, font_size, position,orientation,random_state=None, **kwargs):
     return("hsl(0,100%, 1%)")
 stop_words = stopwords.words('english')
@@ -110,7 +114,6 @@ wordcd(fig2)
 st.pyplot(fig2)
 
 
-import gender_guesser.detector as gender
 
 st.title("Gender Distribution | Distribution over time")
 st.title("Spatial Disribution")
