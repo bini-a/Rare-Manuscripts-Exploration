@@ -3,7 +3,12 @@ import streamlit as st
 def app():
     st.title("Home")
     st.write("""
-    - Title for the web -app
-    - Description of the project
+    Duke Rubenstein Library Main Entry Card Catalog
+    
+    This site was created by the Duke University Data+ 2021 Rubenstein Library Card Catalog Team. Working with the digitized cards from the David M. Rubenstein Rare Book and Manuscript Library's physical card catalogs, our team explored the files as a way to further the library's initiative of finding and describing historically marginalized voices in their collections. The card catalog is a static resource, and has not been updated since before the cards were digitized.
+    
+    We have created a structured dataset out of these digitized cards, sorted by collection of items within the catalog. Using natural language processing and some manual editing, we pulled out important metadata such as author, date written, and location and have added links in the dataset to the corresponding card in the Internet Archives site for further exploration. This dataset will be uploaded to the Duke Research Data Repository to allow access for those who wish to dig deeper into the files.
+    
+    With the dataset we created, we have analysed what and who is present in these cards. Feel free to click through the tabs to see the visualizations and research we have done using this data, or use the dataset to answer your own questions. There is copious rich information present in the files, and our Data+ project is just the tip of the iceberg. We hope that future researchers will continue to disect the card files and continue to gain insights into Duke's history.
     """)
 
