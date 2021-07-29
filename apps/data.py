@@ -49,11 +49,11 @@ def app():
     def explore_profile(df):
         pr = ProfileReport(df, explorative=True)
         return pr   
-
+    pr = explore_profile(df)
     # checkbox to select "explore the dataset report based on pandas profiling"
     if st.checkbox('Profiling Report on Dataset'):
         st.header('**Pandas Profiling Report**')
-        st_profile_report(explore_profile(df))
+        st_profile_report(pr)
     
 
     # WordCloud
@@ -159,34 +159,14 @@ def app():
         plt.axis("off")
         st.pyplot(fig)
 
-
-    # # condition_list = ["1700-1800","1800-1900","1861-1865"]
-    # # chosen_condition = st.selectbox("Choose time range to generate word-cloud",condition_list)
-    # # if chosen_condition==condition_list[0]:
-    # #     condition =(df_set_year.Start>=1700) & (df_set_year.Start<=1800)
-    # #     wd_title = condition_list[0]
-    # # elif chosen_condition==condition_list[1]:
-    # #     condition =(df_set_year.Start>=1800) & (df_set_year.Start<=1900)
-    # #     wd_title = condition_list[1]
-
-    # # else:
-    # #     condition =(df_set_year.Start>=1861) & (df_set_year.Start<=1865)
-    # #     wd_title = condition_list[2]
-
-    # # # st.write(df_set_year[condition])
-
-
-
-
-
-    # values = st.slider("Choose time range to generate your own word-cloud", min_value=1700,max_value=1950,value=(1700,1800))
-    # wd_title = f"{int(values[0])}-{int(values[1])}"
-    # fig2= plt.figure(figsize=(15,5))
-    # generate = gen_wdcloud_condition(values[0],values[1])
-    # plt.imshow(generate)
-    # plt.title("Word Cloud for {}".format(wd_title),pad=20,fontsize=20)
-    # plt.axis("off")
-    # st.pyplot(fig2)
+        values = st.slider("Choose time range to generate your own word-cloud", min_value=1700,max_value=1950,value=(1700,1800))
+        wd_title = f"{int(values[0])}-{int(values[1])}"
+        fig2= plt.figure(figsize=(15,5))
+        generate = gen_wdcloud_condition(values[0],values[1])
+        plt.imshow(generate)
+        plt.title("Word Cloud for {}".format(wd_title),pad=20,fontsize=20)
+        plt.axis("off")
+        st.pyplot(fig2)
 
     # Download Csv option
     def get_table_download_link(df):
