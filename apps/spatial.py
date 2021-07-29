@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import geopandas as gpd
 import plotly.express as px
 import plotly.graph_objects as go
 
@@ -27,10 +28,8 @@ def app():
     text=lc,
     mode='text')
     st.plotly_chart(fg,use_container_width=True)
-    
 
-    
-    st.subheader("NC County Spatial Frequency of Card Catalog Manuscripts")
+   
     
     st.subheader("International Frequency of Card Catalog Manuscripts")
     
@@ -46,3 +45,18 @@ def app():
     fig.update_traces(hoverinfo='label+percent', textinfo='value', textfont_size=20,
                   marker=dict(colors=colors, line=dict(color='#000000', width=2)))
     st.plotly_chart(fig,use_container_width=True)
+    
+        
+
+    
+    st.subheader("NC County Spatial Frequency of Card Catalog Manuscripts")
+    
+#     nc = gpd.read_file('nc.csv')
+    
+#     fig = px.choropleth(nc,
+#                geojson=nc.geometry,
+#                locations=nc.index,
+#                color="Count",
+#                projection="mercator")
+#     fig.update_geos(fitbounds="locations", visible=False)
+#     st.plotly_chart(fig, use_container_width=True)
