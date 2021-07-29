@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import re
 from scipy import stats
 import operator
+import plotly.express as px
 
 def app():
     st.title("History")
@@ -23,8 +24,12 @@ def app():
     plt.ylabel("# of Cards")
     plt.show()
     st.pyplot(fig)
-    
-    st.write("""Here we have a graph of the frequencies of each president's name in the catalog. Let's look at what these cards have to say about the Duke presidents.""")
+
+    "Better to have interactive graph with plotly"
+    br =px.bar({"Names":last,"Number of Records":name_counts},x="Names",y="Number of Records")
+    st.header("Occurances of Duke Presidental Names in the Card Catalog")
+    st.plotly_chart(br,use_container_width=True)
+    st.write("""Here we have a graph of the fre quencies of each president's name in the catalog. Let's look at what these cards have to say about the Duke presidents.""")
     
     #---------------------------------------------------------------------------------------------------------------------------------------
     
