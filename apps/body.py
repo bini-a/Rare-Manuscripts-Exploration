@@ -1,6 +1,6 @@
-from numpy import ediff1d
 import streamlit as st
 import pandas as pd
+import numpy as np
 
 @st.cache
 # Load data
@@ -19,29 +19,38 @@ df_year.End = pd.to_numeric(df_year.End)
 # select appropriate dates
 df_year = df_year[df_year.Start<df_year.End]
 df_year = df_year[(df_year.Start>1700) & (df_year.End>1700)]
-df_year = df_year.head(100)
-
 
 def dataset_selector():
     dataset_container = st.sidebar.beta_expander("# Configure a dataset", True)
     with dataset_container:
         values = st.slider("Choose time range", min_value=1700,max_value=1950,value=(1700,1950))
         start_date,end_date = values[0],values[1]
-        author_identity = st.multiselect("Select Author Identity",df_year.Author_Identity.unique(),
+        author_identity = st.multiselect("Select Author Identity",options = df_year.Author_Identity.unique(),
         default =df_year.Author_Identity.unique())
-        country = st.mu
-        return start_date,end_date,author_identity
+        continent = st.selectbox("Select Continent",options = np.append(np.array("All"),df_year.Continent.unique()))
+        country = st.selectbox("Select Country",options = np.append(np.array("All"),df_year.Country.unique()))
 
-def generate_data(start_date, end_date,author_identity):
+        return start_date,end_date,author_identity,country,continent
+
+def generate_data(start_date, end_date,author_identity,country,continent):
     time_condition =(df_year.Start>=start_date) & (df_year.Start<=end_date)
 
     ret = df_year[time_condition]
-    gender_condition = ret.Author_Identity.isin(author_identity)
-    ret= ret[gender_condition]
+    ret = ret[ret.Author_Identity.isin(author_identity)]
+    if continent == "All":
+        continent = df_year.Continent.unique()
+    else:
+        continent = [continent]
+    if country == "All":
+        country = df.Country.unique()
+    else:
+        country = [country]
+    ret = ret[ret.Continent.isin(continent)]
+    ret = ret[ret.Country.isin(country)]
     return ret
 
 s = dataset_selector()
-df = generate_data(s[0],s[1],s[2])
+df = generate_data(s[0],s[1],s[2],s[3],s[4])
 st.dataframe(df)
 
 
