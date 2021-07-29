@@ -30,9 +30,9 @@ def app():
     @st.cache
     # Load data
     def load_data():
-        df = pd.read_csv("all_sorted_collection.csv")
+        df = pd.read_csv("main_file_dataset.csv")
         return df
-    df = load_data().head(20)
+    df = load_data()
     # Display the dataframe, Select columns to display
     if st.checkbox("Show Dataset"):
         # get the list of columns
