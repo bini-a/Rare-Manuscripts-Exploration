@@ -23,5 +23,5 @@ def app():
     
     df = pd.read_csv("world.csv")
     
-    fig = px.choropleth(df, locations='iso', color='count', hover_name='country', color_continuous_scale=px.colors.sequential.Plasma)
+    fig = px.choropleth(df, locations='iso', color='count', hover_name="hover_name", color_continuous_scale=px.colors.sequential.Plasma)
     st.plotly_chart(fig,use_container_width=True)
