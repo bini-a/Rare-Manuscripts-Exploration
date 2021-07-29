@@ -51,10 +51,23 @@ def app():
         return pr   
     pr = explore_profile(df)
     # checkbox to select "explore the dataset report based on pandas profiling"
-    if st.checkbox('Profiling Report on Dataset'):
+    if st.checkbox('Show Profiling Report on Dataset'):
         st.header('**Pandas Profiling Report**')
         st_profile_report(pr)
     
+
+    # Download Csv option
+    def get_table_download_link(df):
+        """Generates a link allowing the data in a given panda dataframe to be downloaded
+        in:  dataframe
+        out: href string
+        """
+        csv = df.to_csv(index=False)
+        b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
+        href =  f'<a href="data:file/csv;base64,{b64}" download="myfilename.csv"> Download the full Dataset file</a>'
+        return href
+
+    st.markdown(get_table_download_link(df), unsafe_allow_html=True)
 
     # WordCloud
     stop_words = ['i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', "you're", "you've", "you'll", "you'd", 'your', 'yours', 'yourself', 'yourselves', 'he', 'him', 'his', 'himself', 'she', "she's", 'her', 'hers', 'herself', 'it', "it's", 'its', 'itself', 'they', 'them', 'their', 'theirs', 'themselves', 'what', 'which', 'who', 'whom', 'this',
@@ -93,6 +106,8 @@ def app():
             collocations=True,prefer_horizontal=1).generate(clean_sent)
             return wordcloud
     
+    st.header("Word Cloud Visualization")
+    st.write("These are word-cloud visualizations generated after removing stop-words and common functional words from the dataset")
     fig= plt.figure(figsize=(15,5))
     plt.imshow(wordcd(filtered_sentence))
     plt.title("Word Cloud for full text",pad=20,fontsize=20)
@@ -159,45 +174,31 @@ def app():
         plt.axis("off")
         st.pyplot(fig)
 
-        values = st.slider("Choose time range to generate your own word-cloud", min_value=1700,max_value=1950,value=(1700,1800))
-        wd_title = f"{int(values[0])}-{int(values[1])}"
-        fig2= plt.figure(figsize=(15,5))
-        generate = gen_wdcloud_condition(values[0],values[1])
-        plt.imshow(generate)
-        plt.title("Word Cloud for {}".format(wd_title),pad=20,fontsize=20)
-        plt.axis("off")
-        st.pyplot(fig2)
+    st.subheader("Generate Wordcloud")
+    values = st.slider("Choose time range to generate your own word-cloud", min_value=1700,max_value=1950,value=(1700,1800))
+    wd_title = f"{int(values[0])}-{int(values[1])}"
+    fig2= plt.figure(figsize=(15,5))
+    generate = gen_wdcloud_condition(values[0],values[1])
+    plt.imshow(generate)
+    plt.title("Word Cloud for {}".format(wd_title),pad=20,fontsize=20)
+    plt.axis("off")
+    st.pyplot(fig2)
 
-    # Download Csv option
-    def get_table_download_link(df):
-        """Generates a link allowing the data in a given panda dataframe to be downloaded
-        in:  dataframe
-        out: href string
-        """
-        csv = df_set_year.to_csv(index=False)
-        b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
-        href =  f'<a href="data:file/csv;base64,{b64}" download="myfilename.csv">Download csv file</a>'
-        return href
-
-    st.markdown(get_table_download_link(df_set_year), unsafe_allow_html=True)
 
     st.header("Internet Archive")
     st.write("""
-    The image files for all the card entries are uploaded to Internet Archive. It can be searched by text contents
-    It has these benefits:
-    -
-    -
-    -   
+    The image files for all the card entries are uploaded to Internet Archive. It can be searched by text contents...
      """)
     st.write("Follow this link to Internet archive [link](https://archive.org/details/rubensteinmanuscriptcatalog)")
     st.header("Topic Modeling")
     st.write("""
     After trying multiple models, we found a five topic model which works well. As you can see this is five topic model: 
-    Topic 0 -  Church & Duke
-    Topic 1 -  Foreign Affairs
-    Topic 2 -  Domestic Politics
-    Topic 3  - Civil war
-    Topic 4  - Business	
+    Topic 0 -  Church & Duke,
+    Topic 1 -  Foreign Affairs,
+    Topic 2 -  Domestic Politics,
+    Topic 3  - Civil war,
+    Topic 4  - Business.
+
     On the left bottom with red coloring, we have topic 3 which is talking about the army, civil war, battle.
     Topic 1 is about foreign affairs with England, Vietnam and India being mentioned. 
     Topic 2 is about us politics, congress and presidents. This modeling gives a brief overview of what kind of topics to explore 

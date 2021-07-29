@@ -3,7 +3,7 @@ import streamlit as st
 def app():
     st.title("Home")
     st.write("""
-    Duke Rubenstein Library Main Entry Card Catalog
+    ## Duke Rubenstein Library Main Entry Card Catalog
     
     This site was created by the Duke University Data+ 2021 Rubenstein Library Card Catalog Team. Working with the digitized cards from the David M. Rubenstein Rare Book and Manuscript Library's physical card catalogs, our team explored the files as a way to further the library's initiative of finding and describing historically marginalized voices in their collections. The card catalog is a static resource, and has not been updated since before the cards were digitized.
     
