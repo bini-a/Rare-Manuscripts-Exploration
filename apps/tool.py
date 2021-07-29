@@ -77,4 +77,3 @@ def app():
                 st.write("You chose Presiden 1")
             elif duke_pre=="President 2":
                 st.write("You chose President 2")
-app()
