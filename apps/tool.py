@@ -67,7 +67,7 @@ def app():
             duke_uni = st.multiselect("Select Duke University's Early Names ", ["Name 1","Name 2"])
             duke_buil = st.multiselect("Select Duke University's Buildings in the collection ", ["Bldg 1","Bldg 2"])
         return duke_pres
-    if st.checkbox("Explore Duke History"):
+    if st.checkbox("Explore Duke History (To be Finished)"):
         duke_pre = history_explorer()
         dis = st.beta_container()
         with dis:
