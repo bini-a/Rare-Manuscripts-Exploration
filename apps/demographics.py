@@ -39,15 +39,23 @@ def app():
     df_year = df_year[df_year.Start<df_year.End]
     df_year = df_year[(df_year.Start>1700) & (df_year.End>1700)]
 
-    fig = plt.figure(figsize=(15,10))
-    sns.histplot(df_year["Start"],stat="probability")
-    plt.title("Records vs Time")
-    plt.xlabel("Year")
-    plt.ylabel("Percentage")
-    fg = plt.gca()
-    fg.set_yticklabels(['{:.0f}%'.format(x*100) for x in plt.gca().get_yticks()])
-    st.pyplot(fig)
+    # fig = plt.figure(figsize=(15,10))
+    # sns.histplot(df_year["Start"],stat="probability")
+    # plt.title("Records vs Time")
+    # plt.xlabel("Year")
+    # plt.ylabel("Percentage")
+    # fg = plt.gca()
+    # fg.set_yticklabels(['{:.0f}%'.format(x*100) for x in plt.gca().get_yticks()])
+    fg = px.histogram(df_year,x="Start")
+    fg.update_layout(title_text="Number of Records vs Time", title_x=0.5)
+    st.plotly_chart(fg)
 
 
 
-app()
+    fg = px.histogram(df_year,x=["Start","End"])
+    fg.update_layout(title_text="Number of Records vs Time (Start and End Date)", title_x=0.5)
+    st.plotly_chart(fg)
+
+
+
+# app()
