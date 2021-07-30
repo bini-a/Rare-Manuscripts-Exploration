@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-import geopandas as gpd
+#import geopandas as gpd
 import plotly.express as px
 import plotly.graph_objects as go
 
@@ -51,15 +51,15 @@ def app():
     
     st.subheader("NC County Spatial Frequency of Card Catalog Manuscripts")
     
-    
+    st.image("nc_map.png")
     
     # Using Geopandas -> works in jupyter but not when run on streamlit for some reason??
-    nc = gpd.read_file('nc.csv')
+    # nc = gpd.read_file('nc.csv')
     
-    fig = px.choropleth(nc,
-               geojson=nc.geometry,
-               locations=nc.index,
-               color="Count",
-               projection="mercator")
-    fig.update_geos(fitbounds="locations", visible=False)
-    st.plotly_chart(fig, use_container_width=True)
+    # fig = px.choropleth(nc,
+    #            geojson=nc.geometry,
+    #            locations=nc.index,
+    #            color="Count",
+    #            projection="mercator")
+    # fig.update_geos(fitbounds="locations", visible=False)
+    # st.plotly_chart(fig, use_container_width=True)
