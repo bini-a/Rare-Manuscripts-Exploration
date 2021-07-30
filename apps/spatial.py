@@ -51,12 +51,15 @@ def app():
     
     st.subheader("NC County Spatial Frequency of Card Catalog Manuscripts")
     
-    # nc = gpd.read_file('nc.csv')
     
-    # fig = px.choropleth(nc,
-    #            geojson=nc.geometry,
-    #            locations=nc.index,
-    #            color="Count",
-    #            projection="mercator")
-    # fig.update_geos(fitbounds="locations", visible=False)
-    # st.plotly_chart(fig, use_container_width=True)
+    
+    # Using Geopandas -> works in jupyter but not when run on streamlit for some reason??
+    nc = gpd.read_file('nc.csv')
+    
+    fig = px.choropleth(nc,
+               geojson=nc.geometry,
+               locations=nc.index,
+               color="Count",
+               projection="mercator")
+    fig.update_geos(fitbounds="locations", visible=False)
+    st.plotly_chart(fig, use_container_width=True)
