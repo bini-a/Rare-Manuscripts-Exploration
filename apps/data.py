@@ -10,14 +10,12 @@ import plotly.express as px
 # WordCloud 
 from wordcloud import WordCloud, ImageColorGenerator
 import re
-import nltk
-nltk.download('punkt')
 from num2words import num2words
-from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
 import gender_guesser.detector as gender
 import base64
 import streamlit.components.v1 as components
+import neattext as nt 
+from neattext.functions import clean_text
 
 def app():
     st.title("Explore Dataset")
@@ -46,10 +44,14 @@ def app():
         if len(selected_cols) > 0:
             selected_df = df[selected_cols]
             st.dataframe(selected_df)
-    
-    if st.button('Show Profiling Report on Dataset (Opens in new tab)'):
-        pr = ProfileReport(df, explorative=True,minimal=True)
-        output = pr.to_file("output.html",silent=False)
+
+    @st.cache(allow_output_mutation=True)
+    def generate_report(df):
+        return ProfileReport(df, explorative=True)
+    if st.checkbox('Show Profiling Report on Dataset'):
+        st_profile_report(generate_report(df))
+
+
 
     
 
@@ -66,40 +68,51 @@ def app():
 
     st.markdown(get_table_download_link(df), unsafe_allow_html=True)
 
+
+    my_stopword =["haven't", 'it', 'its', 'further', 'can', 'did', "she's", 'such', 've', 'that', 'at', 'where', 'all', 'they', 'don', 'hasn', 're', 'm', 'ours', 'am', 'this', 'needn', 'while', 'again', 'as', 'from', 'once', 'any', 'aren', 'wasn', "shouldn't", 'other', 'be', 'below', 'then', 'very', "couldn't", 'having', 'if', 'herself', 'through', "you'd", 'who', 'had', 'haven', 'after', 'yours', 'whom', 'hers', 'more', "isn't", 'her', "aren't", "don't", "hadn't", 'how', 'his', 'why', 'to', "you've", 'same', 'she', 'themselves', 'an', 'their', 'because', "didn't", 'll', 'd', 'than', "you'll", "you're", 'ain', 'when', 'couldn', 'been', 'there', 'by', 'myself', 'during', 'about', 'both', 'i', 'with', 'just', 'being', 'the', 'ourselves', 'so', 'have', 'we', "shan't", 'me', 'those', 's', 'wouldn', "needn't", 'what', 'itself', "that'll", 'on', 'you', 'between', 'most', 'yourselves', 'off', 'himself', "it's", 'our', 'is', 'no', 'under', "won't", 'over', 'too', 'hadn', 'of', 'were', 'was', 'few', "wouldn't", "mightn't", 'now', "hasn't", 'does', 'doing', 'each', 'own', "should've", 'he', 'above', 'will', "wasn't", 'mightn', 'in', 'not', "mustn't", 'which', 'only', 'your', 'him', 'these', 'against', 'until', 'isn', "doesn't", 't', 'into', 'for', 'mustn', 'some', 'my', 'o', 'doesn', 'ma', 'but', 'has', 'before', 'down', 'theirs', 'out', 'nor', 'or', 'shan', 'up', 'didn', 'a', 'weren', "weren't", 'do', 'them', 'are', 'here', 'and', 'y', 'shouldn', 'yourself', 'won', 'should']
     # WordCloud
-    stop_words = ['i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', "you're", "you've", "you'll", "you'd", 'your', 'yours', 'yourself', 'yourselves', 'he', 'him', 'his', 'himself', 'she', "she's", 'her', 'hers', 'herself', 'it', "it's", 'its', 'itself', 'they', 'them', 'their', 'theirs', 'themselves', 'what', 'which', 'who', 'whom', 'this',
-     'that', "that'll", 'these', 'those', 'am', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had', 'having', 'do', 'does', 'did', 'doing', 'a', 'an', 'the', 'and', 'but', 'if', 'or', 'because', 'as', 'until', 'while', 'of', 'at', 'by', 'for', 'with', 'about', 'against', 'between', 'into', 'through', 'during', 'before', 
-     'after', 'above', 'below', 'to', 'from', 'up', 'down', 'in', 'out', 'on', 'off', 'over', 'under', 'again', 'further', 'then', 'once', 'here', 'there', 'when', 'where', 'why', 'how', 'all', 'any', 'both', 'each', 'few', 'more', 'most', 'other', 'some', 'such', 'no', 'nor', 'not', 'only', 'own', 'same', 'so', 'than', 'too', 'very', 's', 't', 'can', 'will', 'just', 'don', "don't", 'should', "should've", 'now', 'd', 'll', 'm', 'o', 're', 've', 'y', 'ain', 'aren', "aren't", 'couldn', "couldn't", 'didn', "didn't", 'doesn', "doesn't", 'hadn', "hadn't", 'hasn', "hasn't", 'haven', "haven't", 'isn', "isn't", 'ma', 'mightn', "mightn't", 'mustn', "mustn't", 'needn', "needn't", 'shan', "shan't", 'shouldn', "shouldn't", 'wasn', "wasn't", 'weren', "weren't", 'won', "won't", 'wouldn', "wouldn't", 'papers', 'letters', 'items', 'letter', 'collection', 'family', 'co', 'also', 'added', 'see', 'sketch', 'one', 'two', 'ten', 'pp', 'book', 'section', 'ndhyme', 'many', 'item', 'next', 'dec', 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'december', 'january', 'febraury', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'vol', 'volume', 'addition', 'sept', 'include', 'included',
-     'crd', 'eee', 'card', 'new', 'contain', 'boards', 'cm', 'tion', 'including', 'company', 'vols', 'ing', 'three', 'first', 'papers', 'letters', 'paper', 'letter', 'collection', 'collections', 'items', 'record', 'records', 'contains', 'list', 'letter', 'collection', 'family', 'co', 'also', 'added', 'see', 'sketch', 'one', 'two', 'ten', 'pp', 'book', 'section', 'ndhyme', 'many', 'item', 'next', 'december', 'january', 'febraury', 'march', 'april', 'may', 'report', 'mention', 'concerning', 'several', 'guide', 'made', 'june', 'july', 'august', 'september', 'october', 'november', 'vol', 'volume', 'addition', 'sept', 'please', 'ask']
+    my_stopword.extend(['i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', "you're", "you've", "you'll", "you'd", 'your', 'yours', 'yourself', 'yourselves', 'he', 'him', 'his', 'himself', 'she', "she's", 'her', 'hers', 'herself', 'it', "it's", 'its', 'itself', 'they', 'them', 'their', 'theirs', 'themselves', 'what', 'which', 'who', 'whom', 'this',
+        'that', "that'll", 'these', 'those', 'am', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had', 'having', 'do', 'does', 'did', 'doing', 'a', 'an', 'the', 'and', 'but', 'if', 'or', 'because', 'as', 'until', 'while', 'of', 'at', 'by', 'for', 'with', 'about', 'against', 'between', 'into', 'through', 'during', 'before', 
+        'after', 'above', 'below', 'to', 'from', 'up', 'down', 'in', 'out', 'on', 'off', 'over', 'under', 'again', 'further', 'then', 'once', 'here', 'there', 'when', 'where', 'why', 'how', 'all', 'any', 'both', 'each', 'few', 'more', 'most', 'other', 'some', 'such', 'no', 'nor', 'not', 'only', 'own', 'same', 'so', 'than', 'too', 'very', 's', 't', 'can', 'will', 'just', 'don', "don't", 'should', "should've", 'now', 'd', 'll', 'm', 'o', 're', 've', 'y', 'ain', 'aren', "aren't", 'couldn', "couldn't", 'didn', "didn't", 'doesn', "doesn't", 'hadn', "hadn't", 'hasn', "hasn't", 'haven', "haven't", 'isn', "isn't", 'ma', 'mightn', "mightn't", 'mustn', "mustn't", 'needn', "needn't", 'shan', "shan't", 'shouldn', "shouldn't", 'wasn', "wasn't", 'weren', "weren't", 'won', "won't", 'wouldn', "wouldn't", 'papers', 'letters', 'items', 'letter', 'collection', 'family', 'co', 'also', 'added', 'see', 'sketch', 'one', 'two', 'ten', 'pp', 'book', 'section', 'ndhyme', 'many', 'item', 'next', 'dec', 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'december', 'january', 'febraury', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'vol', 'volume', 'addition', 'sept', 'include', 'included',
+        'crd', 'eee', 'card', 'new', 'contain', 'boards', 'cm', 'tion', 'including', 'company', 'vols', 'ing', 'three', 'first', 'papers', 'letters', 'paper', 'letter', 'collection', 'collections', 'items', 'record', 'records', 'contains', 'list', 'letter', 'collection', 'family', 'co', 'also', 'added', 'see', 'sketch', 'one', 'two', 'ten', 'pp', 'book', 'section', 'ndhyme', 'many', 'item', 'next', 'december', 'january', 'febraury', 'march', 'april', 'may', 'report', 'mention', 'concerning', 'several', 
+        'guide', 'made', 'june', 'july', 'august', 'september', 'october', 'november', 'vol', 'volume', 'addition', 'sept', 'please', 'ask'])
 
     change_dict = {"variou":"various","thoma":"thomas","thomass":"thomas","united state":"united states","variouss":"various"}
+
     
     @st.cache
-    def get_text(df):
-        """return clean full text from dataframe"""
-        full = " ".join([str(t) for t in df.Text])
-        # remove punctuation
-        full_no_punc = re.sub(r"\.|!", "",full)
-        full_no_punc = " ".join([i for i in full_no_punc.split() if len(i)>2])
+    def my_clean_text(df):
+        docx = nt.TextFrame(text=" ".join([str(t) for t in df.Text]))
+        txt = docx.normalize("deep")
+        c =clean_text(
+        text = txt,
+        puncts=True,
+        stopwords=True,
+        urls=False,
+        emails=False,
+        numbers=True,
+        emojis=False,
+        special_char=True,
+        phone_num=True,
+        non_ascii=True,
+        multiple_whitespaces=True,
+        contractions=False,
+        currency_symbols=False,
+        custom_pattern=None,
+            )
+        tokens = nt.TextFrame(c).word_tokens()
 
-        # Tokenize
-        text_tokens = word_tokenize(full_no_punc)
-
-        # Change to lower case and select only alphanumeric and tokens longer than two characters
-        pre_process = [i.lower() for i in text_tokens if i.isalnum() and len(i)>2]
-
-        # remove_single_characters
-        token_no_stopword = [word for word in pre_process if len(word)>2]
-
-        filtered_sentence = (" ").join(token_no_stopword)
+        filtered_word = [word for word in tokens if len(word)>2 and word not in my_stopword]
+        filtered_sentence = " ".join(filtered_word)
         for i in change_dict:
             filtered_sentence =filtered_sentence.replace(i,change_dict[i])
         return filtered_sentence
-    filtered_sentence = get_text(df)
+
+
+    filtered_sentence = my_clean_text(df)
     @st.cache
-    def wordcd(clean_sent,cfunc = None):
-            wordcloud = WordCloud(color_func = cfunc, 
-            stopwords=stop_words,background_color="white", width=3000, height=2000, max_words=50,
+    def wordcd(clean_sent):
+            wordcloud = WordCloud(background_color="white", width=3000, height=2000, max_words=50,
             collocations=True,prefer_horizontal=1).generate(clean_sent)
             return wordcloud
     
@@ -118,13 +131,13 @@ def app():
         full_no_punc = " ".join([i for i in full_no_punc.split() if len(i)>1])
 
         # Tokenize
-        text_tokens = word_tokenize(full_no_punc)
+        text_tokens = nt.TextFrame(full_no_punc).word_tokens()
 
         # Change to lower case and select only alphanumeric
         pre_process = [i.lower() for i in text_tokens if i.isalpha()]
 
         # Remove Stop Words,# remove_single_characters
-        token_no_stopword = [word for word in pre_process if word not in stop_words]
+        token_no_stopword = [word for word in pre_process if word not in my_stopword]
     # 
         filtered_sentence = (" ").join(token_no_stopword)
         return filtered_sentence
@@ -215,4 +228,4 @@ def app():
 
     
 
-app()
+# app()
