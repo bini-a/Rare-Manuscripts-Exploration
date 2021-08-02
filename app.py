@@ -3,8 +3,8 @@ import streamlit as st
 from multiapp import MultiApp
 
 from apps import home,spatial, data, demographics,history,tool # import your app modules here
-import nltk
-nltk.download('punkt')
+
+import nltkutils
 
 app = MultiApp()
 
