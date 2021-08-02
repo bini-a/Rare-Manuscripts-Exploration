@@ -4,8 +4,8 @@ from multiapp import MultiApp
 
 from apps import home,spatial, data, demographics,history,tool # import your app modules here
 
-import nltkutils
-
+import nltk
+nltk.download('punkt')
 app = MultiApp()
 
 # st.markdown("""
