@@ -11,13 +11,14 @@ import plotly.express as px
 from wordcloud import WordCloud, ImageColorGenerator
 import re
 import nltk
+nltk.download('punkt')
 from num2words import num2words
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 import gender_guesser.detector as gender
 import base64
 import streamlit.components.v1 as components
-# nltk.download('punkt')
+
 def app():
     st.title("Explore Dataset")
     # st.write("""
@@ -221,4 +222,4 @@ def app():
 
     
 
-app()
+# app()
