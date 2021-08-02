@@ -16,6 +16,8 @@ from nltk.tokenize import word_tokenize
 import gender_guesser.detector as gender
 import base64
 import streamlit.components.v1 as components
+import nltk
+nltk.download('punkt')
 def app():
     st.title("Explore Dataset")
     # st.write("""
