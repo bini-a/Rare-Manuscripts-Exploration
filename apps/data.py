@@ -46,18 +46,11 @@ def app():
         if len(selected_cols) > 0:
             selected_df = df[selected_cols]
             st.dataframe(selected_df)
-    # components.html("apps\report=.html")
+    
+    if st.button('Show Profiling Report on Dataset (Opens in new tab)'):
+        pr = ProfileReport(df, explorative=True,minimal=True)
+        output = pr.to_file("output.html",silent=False)
 
-    @st.cache
-    # generate profile report
-    def explore_profile(df):
-        pr = ProfileReport(df, explorative=True)
-        return pr   
-    pr = explore_profile(df)
-    # checkbox to select "explore the dataset report based on pandas profiling"
-    if st.checkbox('Show Profiling Report on Dataset'):
-        st.header('**Pandas Profiling Report**')
-        st_profile_report(pr)
     
 
     # Download Csv option
@@ -222,4 +215,4 @@ def app():
 
     
 
-# app()
+app()
