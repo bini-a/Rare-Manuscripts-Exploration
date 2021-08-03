@@ -2,7 +2,7 @@
 import streamlit as st
 from multiapp import MultiApp
 
-from apps import home,spatial, data,history_tool,demographics,history,tool # import your app modules here
+from apps import home, data, history_tool, history, tool,#demographics,spatial,# import your app modules here
 
 
 app = MultiApp()
@@ -17,8 +17,8 @@ app.add_app("Home", home.app)
 app.add_app("Explore Data", tool.app)
 app.add_app("Explore Duke History", history_tool.app)
 app.add_app("Data", data.app)
-app.add_app("Spatial", spatial.app)
-app.add_app("Demographics", demographics.app)
+# app.add_app("Spatial", spatial.app)
+# app.add_app("Demographics", demographics.app)
 app.add_app("History", history.app)
 
 
