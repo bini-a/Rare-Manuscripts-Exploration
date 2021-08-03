@@ -130,7 +130,7 @@ def app():
     def dataset_selector():
         dataset_container = st.sidebar.beta_expander("""Explore Collections Related to Duke's History & Other Interests""",False)
         choice = ["Duke University Presidents",
-            "Duke University Early Names","Charleston Earthquake", "Wilmington Race Riot of 1898"]
+            "Duke University Early Names","Charleston Earthquake", "Wilmington Race Riot of 1898","History of Slavery/Duke Buildings(To be finished)"]
         with dataset_container:
             check = st.radio("Explore",choice)
             if check ==choice[0]:
