@@ -88,12 +88,12 @@ def app():
         ret = ret[ret.Name.isin(author)]
 
         columns = df_year.columns.tolist()
-        # cols = st.beta_expander(" Select the columns to display:",False)
-        # with cols:
-        #     columns_to_show = st.multiselect("",columns,default = columns)
-        # if len(columns_to_show) > 0:
-        #     selected_df = ret[columns_to_show]
-        #     return selected_df    
+        cols = st.checkbox(" Select the columns to display:",False)
+        if cols:
+            columns_to_show = st.multiselect("",columns,default = columns)
+            if len(columns_to_show) > 0:
+                selected_df = ret[columns_to_show]
+                return selected_df    
         return ret
 
     s = dataset_selector()
