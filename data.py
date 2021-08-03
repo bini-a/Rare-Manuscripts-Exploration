@@ -191,7 +191,7 @@ def app():
         Mostly male and mostly female result from names that are less cut and dry in regards to the gender they are associated with. Androgynous, means that a name is not traditionally strongly associated with either gender and unknown means that the package was unable to classify a name into any of the other categories. 
         These tended to be non-person organizations or places that would not have a gender and thus were dropped for the visualizations of the results.
         """)
-    st.image("gender.png")
+    st.image("../gender.png")
     st.markdown("""
     As shown in the above bar chart, the names of the authors present in the library's card collection are overwhelmingly male. This comes as no suprise to anyone who has looked through the cards. Something else of note is the strong presence of binarily gendered names i.e., there are very few "mostly male" or "mostly female" names (and seldom an androgynous one), most are one or the other. Perhaps this
     is indicative of the kinds of names that were given during the time period represented in the cards.
@@ -299,7 +299,7 @@ def app():
 
     st.subheader("NC County Spatial Frequency of Card Catalog Manuscripts")
     
-    st.image("nc_map.png")
+    st.image("../nc_map.png")
     st.markdown("""
     When we add up all the county collection counts up, we get 551 cards cataloging collections that are specifically from North Carolina counties. 
     There are a lot of cards from Durham County because the Rubenstein Library is located
@@ -313,7 +313,7 @@ def app():
     """)
     @st.cache 
     def load_world_map():
-        world = pd.read_csv("world.csv")
+        world = pd.read_csv("../world.csv")
         fig = px.choropleth(world, locations='iso', color='count', hover_name="hover_name", color_continuous_scale=px.colors.sequential.Plasma)
         return fig 
     fig = load_world_map()
