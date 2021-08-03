@@ -8,13 +8,15 @@ import plotly.express as px
 
 def app():
     st.title("History")
-    st.subheader("History of Duke Presidents in the Catalog")
+    st.write("""See the 'Explore Duke History' tab to see the Duke Presidents, Building Names, and Early Duke Names in the dataset""")
+    st.header("History of Duke Presidents in the Catalog")
+    st.write("""Our first approach for finding presidents was a simple search for their last names. However, most of these occurances were unrealated to the presidents, so for our second approach we looked for both the first and last name appearing together in a card and yielded much better results, shown below.""")
     
     #---------------------------------------------------------------------------------------------------------------------------------------
     # Print graph of counts per presidential name
     last = ["York", "Craven", "Gannaway", "Wood", "Crowell", "Kilgo", "Few", "Flowers", "Edens", "Hart", "Knight", "Sanford", "Brodie", "Keohane", "Brodhead"]
     name_counts = [4, 36, 5, 5, 5, 10, 34, 15, 0, 1, 4, 17, 0, 0, 3]
-
+    
     # Disply bar chart of first and last name occurances
     fig, ax = plt.subplots()
     plt.bar(last, name_counts, color='#00539B')
@@ -27,11 +29,19 @@ def app():
 
     "Better to have interactive graph with plotly"
     br =px.bar({"Names":last,"Number of Records":name_counts},x="Names",y="Number of Records")
-    st.header("Occurances of Duke Presidental Names in the Card Catalog")
+    st.subheader("Occurances of Duke Presidental Names in the Card Catalog")
     st.plotly_chart(br,use_container_width=True)
-    st.write("""Here we have a graph of the fre quencies of each president's name in the catalog. Let's look at what these cards have to say about the Duke presidents.""")
+    
+    if st.checkbox("See caveats", key="1"):
+        st.write("""*
+        While this search method is fairly accurate, there are still some instances in which the names refer to unrelated people.
+        *""")
+    
+    st.write("""Here we have a graph of the frequencies of each president's name in the catalog. Let's look at what these cards have to say about the Duke presidents.""")
     
     #---------------------------------------------------------------------------------------------------------------------------------------
+    
+    st.subheader("Qualitative Analysis of Presidents")
     
     st.write("""   
     Presidents Brodie, Keohane, and Edens were not mentioned in the card catalog. Hart did not have any relevant mentions
@@ -85,14 +95,23 @@ def app():
     Craven is mentioned, but not in much detail [here](https://archive.org/details/rubensteinmanuscriptcatalog_Elt_to_Fie/page/n469/mode/2up), [here](https://archive.org/details/rubensteinmanuscriptcatalog_Gri_to_Hand/page/n128/mode/2up), [here](https://archive.org/details/rubensteinmanuscriptcatalog_Harw_to_Hem/page/167/mode/2up), [here](https://archive.org/details/rubensteinmanuscriptcatalog_J._Johnson_to_Jz/page/n676/mode/2up), [here](https://archive.org/details/rubensteinmanuscriptcatalog_Lanp_to_Ler/page/27/mode/2up), and [here](https://archive.org/details/rubensteinmanuscriptcatalog_I._White_to_R._Williams/page/n408/mode/2up).
     """)
     
-    st.subheader("Duke Building Names in the Catalog")
+    #-----------------------------------------------------------------------------------------------------------------------------------
+    
+    st.header("Duke Building Names in the Catalog")
     
     st.write("""
     Here are the counts of the building names present in the collection headers' name column: 
     
-    Alspaugh: 1, Brodie: 1, Crowell: 1, Edens: 1, Kilgo: 1, Bassett: 2, Lilly: 2, Southgate: 4, Flowers: 4, Few: 4, Pegram: 5, Wilkinson: 5, Perkins: 6, Giles: 7, Baldwin: 9, Hart: 10, Sanford: 10, Craven: 10, Gray: 13, Biddle: 19, Blackwell: 36, White: 42, Allen: 46, Wilson: 49, Brown: 74
+    *Alspaugh: 1, Brodie: 1, Crowell: 1, Edens: 1, Kilgo: 1, Bassett: 2, Lilly: 2, Southgate: 4, Flowers: 4, Few: 4, Pegram: 5, Wilkinson: 5, Perkins: 6, Giles: 7, Baldwin: 9, Hart: 10, Sanford: 10, Craven: 10, Gray: 13, Biddle: 19, Blackwell: 36, White: 42, Allen: 46, Wilson: 49, Brown: 74*""")
+    
+    if st.checkbox("See caveats",key="2"):
+        st.write("""*
+        Many of these names are not related directly to the person or persons for which these buildings were named. However, they may suggest family ties to the university lasting for multiple generations. Check out the 'Explore Duke History' tab or search in the Internet Archive to explore the contents of these cards.
+        *""")
+    
+    st.subheader("Qualitative Analysis of Building Names")
 
-
+    st.write("""
     Lilly, Pegram, Wilkinson, Gray, White, Allen, Wilson, Brown, unfortunately, do not have any hits that are directly relevant to the history of the building, but it is still interesting to see the prevalence of Duke-related names, regardless if it is the same specific individuals. Additionally, the library's history of East Campus buildings is found [here](https://library.duke.edu/rubenstein/uarchives/history/exhibits/building-names/east).
     
     Similar to the presidents, some of these names' only relevant cards are the "See Duke University Archives" cards assoicated with the person the building is named after. See [Alspaugh](https://archive.org/details/rubensteinmanuscriptcatalog_A_to_Amer/page/n644/mode/2up), [Bassett](https://archive.org/details/rubensteinmanuscriptcatalog_Bam_to_Bedh/page/n449/mode/2up), and [Baldwin](https://archive.org/details/rubensteinmanuscriptcatalog_Armi_to_Bal/page/n575/mode/2up).
@@ -111,7 +130,7 @@ def app():
     """)
     
     
-    st.subheader("Duke's Nomenclature")
+    st.header("Duke's Nomenclature")
     
     counts = [0, 2, 21, 169, 523]
     names = ["Brown School", "Union Institute", "Normal College", "Trinity College", "Duke University"]
@@ -126,9 +145,12 @@ def app():
     plt.show()
     st.pyplot(fig)
     
-    st.write("""
-    Actual Dates of Institutions:
+    if st.checkbox("See caveats", key="3"):
+        st.write("""*These are the counts of the occurances of a full name in the catalog (e.g., "Trinity College"). These may just be a boilerplate phrase like "See Duke University Archives" or they may provide deeper insights into the university's history. Check out the 'Explore Duke History' tab to see the relevance of the results.
+        *""")
     
+    st.subheader("Actual Dates of Institutions:")
+    st.write("""
     Brown School: 1838-1841
 
     Union Institution: 1841-1851
@@ -137,10 +159,11 @@ def app():
 
     Trinity College: 1859-1924
 
-    Duke University: 1924-present
+    Duke University: 1924-present""")
 
-    Average Associated Date in the Catalog:
+    st.subheader("Average Associated Date in the Catalog:")
     
+    st.write("""
     Brown School: N/A
 
     Union Institution: 1880
@@ -152,6 +175,7 @@ def app():
     Duke University: 1917
     """)
     
+    #-------------------------------------------------------------------------------------------------------------------------------
     
     brown = []
     union = ['1863-1890', '1879-1889']
@@ -185,3 +209,18 @@ def app():
     plt.xlabel("Year")
     plt.ylabel("# of Mentions")
     st.pyplot(fig)
+    
+    if st.checkbox("See caveats", key="4"):
+        st.write("""*The dates indicate the date the collection that mentions a Duke name was written (e.g., there is a bible written in the 1200s that Duke acquired in the 20th century). Due to inconsistancies in the cataloging dates, we were unable to pull those from the data, and are going off of the date written. For this chart, the start date is used for collections with date ranges.
+        *""")
+    
+    st.write("""This plot shows the quantity of the dates of the collections that mention one of Duke's names, for each of the names.""") 
+    
+    st.header("Suggestions for Future Research")
+    st.write("""
+    While we were able to create a fairly comprehensive dataset containing all of the digitized cards, we were limited by our OCR software and data cleaning techniques. We have manually gone through the dataset to correct OCR errors in the authors' names; however, there are still many incomplete location or date cells, as well as some completly blank rows that the OCR did not pick up. Our first reccomendation, should another team continue this research, would be to manually correct some of the data which we were unable to correct due to time constrainsts and update our analysis which relies upon said data.
+    
+    An avenue of analysis that we were, unfortunately, unable to explore was sentiment analysis surrounding various groups in the catalog (e.g., the southern gentleman, slaves, southern belles). We would reccomend that future researchers analyze how these and other groups are represented and discussed in the catalog. In addition, the identification of "outdated language" in the cards would prove helpful.
+    
+    We were able to explore Duke's history in relation to its presidents, buildings, and early names; other topics to look into with regards to the university could be the historical ties to Methodism, the relationship with UNC, and the history of minority students (POC, women, international, etc.). Beyond the university, exploring major events such as the Civil War, slavery, and activism in North Carolina could be interesting as well.
+    """)
