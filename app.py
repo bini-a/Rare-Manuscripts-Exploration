@@ -2,7 +2,7 @@
 import streamlit as st
 from multiapp import MultiApp
 
-from apps import home, data, history_tool, history, tool,#demographics,spatial,# import your app modules here
+from apps import home, data, history_tool, history, tool #demographics,spatial,# import your app modules here
 
 
 app = MultiApp()
