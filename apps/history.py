@@ -27,10 +27,10 @@ def app():
     plt.show()
     st.pyplot(fig)
 
-    "Better to have interactive graph with plotly"
-    br =px.bar({"Names":last,"Number of Records":name_counts},x="Names",y="Number of Records")
-    st.subheader("Occurances of Duke Presidental Names in the Card Catalog")
-    st.plotly_chart(br,use_container_width=True)
+#     "Better to have interactive graph with plotly"
+#     br =px.bar({"Names":last,"Number of Records":name_counts},x="Names",y="Number of Records")
+#     st.subheader("Occurances of Duke Presidental Names in the Card Catalog")
+#     st.plotly_chart(br,use_container_width=True)
     
     if st.checkbox("See caveats", key="1"):
         st.write("""*
@@ -191,7 +191,6 @@ def app():
             dates = str(date).split("-")
             if int(dates[0]) >= 1838:
                 dic[int(dates[0])] = dic.get(int(dates[0])) + 1
-                        
         return dic
     
     # dic1, dic2, dic3, dic4 = {}, {}, {}, {}
@@ -213,7 +212,7 @@ def app():
     st.image("duke_buildings.png")
     
     if st.checkbox("See caveats", key="4"):
-        st.write("""*The dates indicate the date the collection that mentions a Duke name was written (e.g., there is a bible written in the 1200s that Duke acquired in the 20th century). Due to inconsistancies in the cataloging dates, we were unable to pull those from the data, and are going off of the date written. For this chart, the start date is used for collections with date ranges.
+        st.write("""*The dates indicate the date the collection that mentions a Duke name was written. Due to inconsistancies in the cataloging dates, we were unable to pull those from the data, and are going off of the date written. For this chart, the start date is used for collections with date ranges.
         *""")
     
     st.write("""This plot shows the quantity of the dates of the collections that mention one of Duke's names, for each of the names.""") 
