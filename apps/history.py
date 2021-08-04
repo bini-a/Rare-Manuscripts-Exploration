@@ -8,7 +8,7 @@ import plotly.express as px
 
 def app():
     st.title("History")
-    st.write("""See the 'Explore Duke History' tab to see the Duke Presidents, Building Names, and Early Duke Names in the dataset""")
+    st.write("""See the 'Selected Collections' tab to see the Duke Presidents, Building Names, and Early Duke Names in the dataset""")
     st.header("History of Duke Presidents in the Catalog")
     st.write("""Our first approach for finding presidents was a simple search for their last names. However, most of these occurances were unrealated to the presidents, so for our second approach we looked for both the first and last name appearing together in a card and yielded much better results, shown below.""")
     
@@ -106,7 +106,7 @@ def app():
     
     if st.checkbox("See caveats",key="2"):
         st.write("""*
-        Many of these names are not related directly to the person or persons for which these buildings were named. However, they may suggest family ties to the university lasting for multiple generations. Check out the 'Explore Duke History' tab or search in the Internet Archive to explore the contents of these cards.
+        Many of these names are not related directly to the person or persons for which these buildings were named. However, they may suggest family ties to the university lasting for multiple generations. Check out the 'Selected Collections' tab or search in the Internet Archive to explore the contents of these cards.
         *""")
     
     st.subheader("Qualitative Analysis of Building Names")
@@ -146,7 +146,7 @@ def app():
     st.pyplot(fig)
     
     if st.checkbox("See caveats", key="3"):
-        st.write("""*These are the counts of the occurances of a full name in the catalog (e.g., "Trinity College"). These may just be a boilerplate phrase like "See Duke University Archives" or they may provide deeper insights into the university's history. Check out the 'Explore Duke History' tab to see the relevance of the results.
+        st.write("""*These are the counts of the occurances of a full name in the catalog (e.g., "Trinity College"). These may just be a boilerplate phrase like "See Duke University Archives" or they may provide deeper insights into the university's history. Check out the 'Selected Collections' tab to see the relevance of the results.
         *""")
     
     st.subheader("Actual Dates of Institutions:")

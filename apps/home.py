@@ -27,6 +27,8 @@ def app():
     
     *Duke History*: History of Duke presidents, building names, and university nomenclature, as well as suggestions for future research.
     
-    *Filter and Explore Dataset*: Filter by metadata (time range, author identity, continent, drawer number) and historically related cards (presidents, early names, Charleston Earthquake, Wilmington Race Riot, Buildings)
+    *Filter and Explore*: Filter by metadata (time range, author identity, continent, drawer number)
+    
+    *Selected Collections*: See historically related cards (presidents, early names, Charleston Earthquake, Wilmington Race Riot, Buildings)
     """)
     
