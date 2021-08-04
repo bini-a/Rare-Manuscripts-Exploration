@@ -12,3 +12,14 @@ def app():
     With the dataset we created, we have analysed what and who is present in these cards. Feel free to click through the tabs to see the visualizations and research we have done using this data, or use the dataset to answer your own questions. There is copious rich information present in the files, and our Data+ project is just the tip of the iceberg. We hope that future researchers will continue to disect the card files and continue to gain insights into Duke's history.
     """)
 
+    st.header("Directory")
+    st.write("""
+    *Home*: Introduction to project and web app
+    
+    *Data Analysis*: Topic modeling, word clouds, gender & date demographics, and spatial mapping.
+    
+    *Duke History*: History of Duke presidents, building names, and university nomenclature, as well as suggestions for future research.
+    
+    *Filter and Explore Dataset*: Filter by metadata (time range, author identity, continent, drawer number) and historically related cards (presidents, early names, Charleston Earthquake, Wilmington Race Riot, Buildings)
+    """)
+    

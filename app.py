@@ -15,11 +15,11 @@ app = MultiApp()
 # Add all your application here
 app.add_app("Home", home.app)
 # app.add_app("Explore Duke History", history_tool.app)
-app.add_app("Data", data.app)
+app.add_app("Data Analysis", data.app)
 # app.add_app("Spatial", spatial.app)
 # app.add_app("Demographics", demographics.app)
-app.add_app("History", history.app)
-app.add_app("Explore Data", tool.app)
+app.add_app("Duke History", history.app)
+app.add_app("Filter and Explore Dataset", tool.app)
 
 
 
