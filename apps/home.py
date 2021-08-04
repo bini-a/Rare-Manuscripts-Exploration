@@ -11,4 +11,11 @@ def app():
     
     With the dataset we created, we have analysed what and who is present in these cards. Feel free to click through the tabs to see the visualizations and research we have done using this data, or use the dataset to answer your own questions. There is copious rich information present in the files, and our Data+ project is just the tip of the iceberg. We hope that future researchers will continue to disect the card files and continue to gain insights into Duke's history.
     """)
+    if st.checkbox("How to use the tabs from the navigation menu?"):
+        st.write("""
+    - Data Analysis Tab: View or download our dataset, read our analysis of demographics, time and spatial distribution.  
+    - Duke History Tab : Read about Duke Presidents, Duke Building Names & Duke's Early names mentioned in the dataset.   
+    - Explore Tab : Explore the dataset interactively by selecting time range, author name, country of origin, and drawer number.  
+    - Selected Collection Tab: Explore hand-picked collections from the dataset in topics such as History of Slavery, Charleston Earthquake, Wilmington Race Riot of 1898 and Duke University Presidents.
+    """)
 

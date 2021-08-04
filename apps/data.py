@@ -3,9 +3,6 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import numpy as np
-import pandas_profiling
-from pandas_profiling import ProfileReport
-from streamlit_pandas_profiling import st_profile_report
 import plotly.express as px
 import plotly.graph_objects as go
 from wordcloud import WordCloud, ImageColorGenerator
@@ -16,6 +13,9 @@ import base64
 import streamlit.components.v1 as components
 import neattext as nt 
 from neattext.functions import clean_text
+import pandas_profiling
+import streamlit as st
+from streamlit_pandas_profiling import st_profile_report
 
 
 
@@ -40,6 +40,16 @@ def app():
         if len(selected_cols) > 0:
             selected_df = df[selected_cols]
             st.dataframe(selected_df)
+    @st.cache
+    def load_profile():
+        pr = df.profile_report()
+        return pr
+
+    if st.checkbox("Show Pandas Profiling Report on Dataset"):
+        st.title("Pandas Profiling in Streamlit")
+        pr = load_profile()
+        st_profile_report(pr)
+
     
     # Download Csv option
     def get_table_download_link(df):
@@ -67,17 +77,18 @@ def app():
     st.image("topic.png")
 
     st.markdown("""
-    Topic 0 -  Church & Duke   
-    Topic 1 -  Foreign Affairs  
-    Topic 2 -  Domestic Politics   
-    Topic 3  - Civil war  
-    Topic 4  - Business   
-
+    The topics are Church & Duke, Foreign Affairs, Domestic Politics, Civil war and Business in the order of the image above.
+    Topic 1 mainly deals with foreign affairs with countries such as  England, Vietnam and India being mentioned. 
+    Topic 2 focuses on US politics, congress and presidents.
     On the left bottom with red coloring, we have topic 3 which is talking about the army, civil war, battle.
-    Topic 1 is about foreign affairs with England, Vietnam and India being mentioned. 
-    Topic 2 is about us politics, congress and presidents. This modeling gives us a brief overview of what kind of topics to explore 
-    in the dataset. Futher visualization like word-clouds add insight to the most discussed topics in the card catalogues.
+    This modeling gives us a brief overview of what kind of topics to explore in the dataset. 
+    Futher visualizations like word-clouds add insight to the most discussed topics in the card catalogues.
     """)
+       # Topic 0 -  Church & Duke   
+    # Topic 1 -  Foreign Affairs  
+    # Topic 2 -  Domestic Politics   
+    # Topic 3  - Civil war  
+    # Topic 4  - Business
     @st.cache
     def create_stopwords():
         change_dict = {"variou":"various","thoma":"thomas","thomass":"thomas","united state":"united states","variouss":"various"}
@@ -176,7 +187,7 @@ def app():
         st.image("wdcld-3.png")
     if st.checkbox("See caveats"):
         st.write("""*The three word clouds generated are based on the entries which 
-        have dates (which our algorithm was able to pick up).
+        have dates (and our algorithm was able to pick up).
         *""")
 
     # Demographics
@@ -237,6 +248,10 @@ def app():
         return fg
     fg = load_year_fig()
     st.plotly_chart(fg)
+    st.markdown("""
+    The visualization below shows that most of the card entries are from the 19th century.
+    """)
+
     if st.checkbox("See caveats",key="3"):
         st.write("""*
         For this visualization, only collection head entries are used. The year
