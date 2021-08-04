@@ -19,3 +19,14 @@ def app():
     - Selected Collection Tab: Explore hand-picked collections from the dataset in topics such as History of Slavery, Charleston Earthquake, Wilmington Race Riot of 1898 and Duke University Presidents.
     """)
 
+    st.header("Directory")
+    st.write("""
+    *Home*: Introduction to project and web app
+    
+    *Data Analysis*: Topic modeling, word clouds, gender & date demographics, and spatial mapping.
+    
+    *Duke History*: History of Duke presidents, building names, and university nomenclature, as well as suggestions for future research.
+    
+    *Filter and Explore Dataset*: Filter by metadata (time range, author identity, continent, drawer number) and historically related cards (presidents, early names, Charleston Earthquake, Wilmington Race Riot, Buildings)
+    """)
+    
