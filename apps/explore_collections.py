@@ -60,6 +60,16 @@ def app():
         else:
             return df.iloc[wil,:]
         return exp_df
+    def short_link(df):
+        def make_clickable(url, text):
+                return f'<a target="_blank" href="{url}">{text}</a>'
+        df = df[["Name","Text","Link","Drawer_No","Page_drawer"]]
+        df["Link"] = df["Link"].apply(make_clickable, args = ('Link',))
+        df.rename(columns={"Drawer_No":"Drawer","Page_drawer":"Page"},inplace=True)
+        return df
+    
+
+
 
     selected_identity,explore_topic = dataset_selector()
 
@@ -68,4 +78,8 @@ def app():
         container2 = st.beta_container()
         with container2:
             second_container_displayed_df =generate_data(selected_identity,explore_topic)
-            st.table(second_container_displayed_df[["Name","Text"]])
+            second_container_displayed_df = short_link(second_container_displayed_df)
+            st.write(second_container_displayed_df.to_html(escape = False), unsafe_allow_html = True)
+
+            # st.table(second_container_displayed_df)
+            # st.table(second_container_displayed_df[["Name","Text","Link"]])
