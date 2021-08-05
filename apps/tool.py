@@ -201,7 +201,7 @@ def app():
         if st.button("Generate"):
             start_date,end_date = values[0],values[1]
             with second_exp:
-                gen = gen_wdcloud_condition(1700,1800)
+                gen = gen_wdcloud_condition(start_date,end_date)
                 fig= plt.figure()
                 plt.imshow(gen)
                 plt.title("Word Cloud for {} - {}".format(start_date,end_date),pad=20,fontsize=20)
