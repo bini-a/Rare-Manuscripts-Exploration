@@ -80,6 +80,7 @@ def app():
             second_container_displayed_df =generate_data(selected_identity,explore_topic)
             second_container_displayed_df = short_link(second_container_displayed_df)
             st.write(second_container_displayed_df.to_html(escape = False), unsafe_allow_html = True)
+            # st.table(second_container_displayed_df)
 
             # st.table(second_container_displayed_df)
             # st.table(second_container_displayed_df[["Name","Text","Link"]])
