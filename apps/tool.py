@@ -6,11 +6,15 @@ from neattext.functions import clean_text
 from wordcloud import WordCloud, ImageColorGenerator
 import matplotlib.pyplot as plt
 import re
-
-
-
-
+        
 def app():
+    if st.checkbox("How to use the tools"):
+        st.write("""
+        *Configure and Explore Dataset*: Use the widget on the left side of the page to filter the dataset by year, author, author identity, continent, and/or drawer number. You can also click the Quick Overview checkbox to choose which rows of the dataset you wish to see. If you want to see the full text of your selected cards, click the Read Full Text Here checkbox under the displayed dataset.
+        
+        *Generate Wordcloud*: Scroll down on the left side of the page to select a range of years to generate a wordcloud of common words in the related cards.
+        """)
+    
     @st.cache
     # Load data
     def load_data():
@@ -132,8 +136,8 @@ def app():
             if st.checkbox("Read Full Text Here", False):
                 # st.write(first_container_displayed_df[["Name","Text","Link","Drawer_No","Page_drawer"]].to_html(escape = False),
                 #  unsafe_allow_html = True)
-
-                st.table(first_container_displayed_df[["Name","Text","Drawer_No","Page_drawer"]])
+                
+                st.table(first_container_displayed_df[["Name","Text", "Drawer_No","Page_drawer"]])
             # st.write(first_container_displayed_df.to_html(escape = False), unsafe_allow_html = True)
 
     # GENERATE WORD CLOUD
