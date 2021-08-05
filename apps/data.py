@@ -280,7 +280,13 @@ def app():
 #     st.header("Alternative display")
     lc =['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY']
     txt =['Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','District of Columbia','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West Virginia','Wisconsin','Wyoming']
-    fig = px.choropleth(locations=['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'], locationmode="USA-states", color=[153, 0, 1, 16, 11, 3, 76, 5, 43, 17, 371, 1, 0, 25, 21, 13, 3, 53, 71, 11, 218, 169, 12, 3, 63, 33, 0, 3, 0, 22, 17, 6, 302, 1188, 1, 63, 3, 2, 193, 19, 299, 0, 81, 22, 4, 13, 1631, 5, 48, 3, 1], scope="usa", hover_name=['Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','District of Columbia','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West Virginia','Wisconsin','Wyoming',], color_continuous_scale="YlGnBu", labels={'color':'Count', 'locations':'State Abrev.'})
+    fig = px.choropleth(locations=['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'],
+     locationmode="USA-states",
+     color=[153, 0, 1, 16, 11, 3, 76, 5, 43, 17, 371, 1, 0, 25, 21, 13, 3, 53, 71, 11, 218, 169, 12, 3, 63, 33, 0, 3, 0, 22, 17, 6, 302, 1188, 1, 63, 3, 2, 193, 19, 299, 0, 81, 22, 4, 13, 1631, 5, 48, 3, 1],
+     scope="usa", 
+     hover_name=['Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','District of Columbia','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West Virginia','Wisconsin','Wyoming',], 
+     color_continuous_scale="YlGnBu", 
+     labels={'color':'Count', 'locations':'State Abrev.'})
     fg = go.Figure(data=fig)
     fg.update_layout(     autosize=False,
         margin = dict(
@@ -300,6 +306,11 @@ def app():
     locationmode='USA-states',
     text=lc,
     mode='text')
+    fig.update_layout(
+    title={
+           'xanchor':'center',
+           'yanchor':'top',
+           'x':0.5})
     st.plotly_chart(fg,use_container_width=True)
     st.write("""
     Based on the heat map, we can see that the states with the most hits are Virginia and North Carolina. New York, South Carolina, and Georgia are also pretty common. Outside of the continental US, Hawaii and Puerto Rico have one hit each.There are some odd outliers here e.g., why is North Carolina not the most represented state? 

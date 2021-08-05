@@ -68,4 +68,4 @@ def app():
         container2 = st.beta_container()
         with container2:
             second_container_displayed_df =generate_data(selected_identity,explore_topic)
-            st.dataframe(second_container_displayed_df)
+            st.table(second_container_displayed_df[["Name","Text"]])
