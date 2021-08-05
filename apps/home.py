@@ -1,10 +1,11 @@
 import streamlit as st
 
 def app():
-    st.title("Home")
+    st.markdown(""" <style> .font {
+    font-size:50px ; font-family: 'Garamond Bold'; color: #005587;} 
+    </style> """, unsafe_allow_html=True)
+    st.markdown('<p class="font">Duke Rubenstein Library Main Entry Card Catalog</p>', unsafe_allow_html=True)
     st.write("""
-    ## Duke Rubenstein Library Main Entry Card Catalog
-    
     This site was created by the Duke University Data+ 2021 Rubenstein Library Card Catalog Team. Working with the digitized cards from the David M. Rubenstein Rare Book and Manuscript Library's physical card catalogs, our team explored the files as a way to further the library's initiative of finding and describing historically marginalized voices in their collections. The card catalog is a static resource, and has not been updated since before the cards were digitized.
     
     We have created a structured dataset out of these digitized cards, sorted by collection of items within the catalog. Using natural language processing and some manual editing, we pulled out important metadata such as author, date written, and location and have added links in the dataset to the corresponding card in the Internet Archives site for further exploration. This dataset will be uploaded to the Duke Research Data Repository to allow access for those who wish to dig deeper into the files.

@@ -20,8 +20,10 @@ from streamlit_pandas_profiling import st_profile_report
 
 
 def app():
-    st.title("Card Catalog Data")
-
+    st.markdown(""" <style> .font {
+    font-size:50px ; font-family: 'Garamond Bold'; color: #005587;} 
+    </style> """, unsafe_allow_html=True)
+    st.markdown('<p class="font">Card Catalog Data</p>', unsafe_allow_html=True)
     @st.cache
     # Load data
     def load_data():
@@ -73,17 +75,31 @@ def app():
     The card catalogues involve several topics. In our attempt to do topic modeling,
     we found that our five topics model  work well to have a general overview of the cards.
     """)
-    st.subheader("Five - Topics Model")
+    st.markdown("<h5 style='text-align: center;'>Five - Topics Model</h5>", unsafe_allow_html=True)
+
+
     st.image("topic.png")
+    # st.markdown("<p style='color: blue;'>Church & Duke</p>" "p""
+   
+    # "<p style='color: orange;'>Foreign Affairs</p>" unsafe_allow_html=True)
+    # "<p style='color: green;'>Domestic Politics</p>", unsafe_allow_html=True)
+    # "<p style='color: red;'>Civil war</p>", unsafe_allow_html=True)
+    # "<p style='color: purple;'>Business</p>", unsafe_allow_html=True)
+
 
     st.markdown("""
-    The topics are Church & Duke, Foreign Affairs, Domestic Politics, Civil war and Business in the order of the image above.
+    The topics are <font color="blue">Church & Duke</font> , <font color="orange">Foreign Affairs</font>,
+    <font color="green">Domestic Politics</font>
+    ,
+    <font color="red">Civil war </font>
+    and 
+    <font color="purple">Business </font>in the order of the image above.
     Topic 1 mainly deals with foreign affairs with countries such as  England, Vietnam and India being mentioned. 
     Topic 2 focuses on US politics, congress and presidents.
     On the left bottom with red coloring, we have topic 3 which is talking about the army, civil war, battle.
     This modeling gives us a brief overview of what kind of topics to explore in the dataset. 
     Futher visualizations like word-clouds add insight to the most discussed topics in the card catalogues.
-    """)
+    """,unsafe_allow_html=True)
        # Topic 0 -  Church & Duke   
     # Topic 1 -  Foreign Affairs  
     # Topic 2 -  Domestic Politics   

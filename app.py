@@ -3,6 +3,7 @@ import streamlit as st
 from multiapp import MultiApp
 
 from apps import home, data, history, tool, explore_collections
+st.set_page_config(page_title="Rubenstein Library Card Catalog", page_icon="DUL_logo_blue.jpg", layout='centered', initial_sidebar_state='auto')
 
 
 app = MultiApp()
