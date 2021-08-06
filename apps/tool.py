@@ -6,6 +6,7 @@ from neattext.functions import clean_text
 from wordcloud import WordCloud, ImageColorGenerator
 import matplotlib.pyplot as plt
 import re
+
         
 def app():
     if st.checkbox("How to use the tools"):
@@ -192,7 +193,7 @@ def app():
         condition =(df_set_year.Start>=start_date) & (df_set_year.Start<=end_date)
         filt_condition = " ".join(df_set_year[condition].Clean.tolist())
         return wordcd(filt_condition)
-    second_exp = st.beta_expander("Generated Word Cloud",True)
+    second_exp = st.beta_expander("Generated Word Cloud",False)
 
     with wd_cld_container:
         st.header("Choose Time Range and generate your own Word Cloud")

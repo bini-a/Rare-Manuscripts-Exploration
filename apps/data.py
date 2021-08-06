@@ -41,16 +41,16 @@ def app():
         selected_cols = st.multiselect("",columns,default = columns)
         if len(selected_cols) > 0:
             selected_df = df[selected_cols]
-            st.dataframe(selected_df)
-    @st.cache
-    def load_profile():
-        pr = df.profile_report()
-        return pr
+    #         st.dataframe(selected_df)
+    # @st.cache
+    # def load_profile():
+    #     pr = df.profile_report()
+    #     return pr
 
-    if st.checkbox("Show Pandas Profiling Report on Dataset"):
-        st.title("Pandas Profiling in Streamlit")
-        pr = load_profile()
-        st_profile_report(pr)
+    # if st.checkbox("Show Pandas Profiling Report on Dataset"):
+    #     st.title("Pandas Profiling in Streamlit")
+    #     pr = load_profile()
+    #     st_profile_report(pr)
 
     
     # Download Csv option
@@ -200,7 +200,7 @@ def app():
         # plt.axis("off")
         # plt.savefig("wdcld-3.png")
         # st.pyplot(fig)
-        st.image("wdcld-3.png")
+        st.image("wdcld-3.png",)
     if st.checkbox("See caveats"):
         st.write("""*The three word clouds generated are based on the entries which 
         have dates (and our algorithm was able to pick up).
@@ -389,29 +389,47 @@ def app():
 
     oceania = {'Australia': 1,'Fiji': 1,'New Zealand': 1}
     def plot(con, i):
-        fig = plt.figure()
         plt.xlabel("Country")
         plt.ylabel("Count")
         plt.xticks(rotation = 45)
-
         plt.bar(con.keys(), con.values(), color='#00539B')
         plt.title(titles[i])
         return fig
     titles = ["Europe", "Asia", "North America", "South America", "Africa", "Oceania"]
-    e,asia_c,n_a = st.beta_columns(3)
-    s_a,a, o = st.beta_columns(3)
+    e,asia_c = st.beta_columns(2)
+    n_a,s_a = st.beta_columns(2)
+    a, o = st.beta_columns(2)
     with e:
-        st.pyplot(plot(europe, 0))
+        # fig = plt.figure()
+        # plot(europe, 0)
+        # fig.savefig("europe.png")
+        st.image("europe.png")
     with asia_c:
-        st.pyplot(plot(asia, 1))
+        # fig = plt.figure()
+        # plot(asia, 1)
+        # fig.savefig("asia.png")
+        st.image("asia.png")
     with n_a:
-        st.pyplot(plot(north_america, 2))
+        # fig = plt.figure()
+        # plot(north_america, 2)
+        # fig.savefig("north_america.png")
+        st.image("north_america.png")
     with s_a:
-        st.pyplot(plot(south_america, 3))
+        # fig = plt.figure()
+        # plot(south_america, 3)
+        # fig.savefig("south_america.png")
+        st.image("south_america.png")
     with a:
-        st.pyplot(plot(africa, 4))
+        # fig = plt.figure()
+        # plot(asia, 4)
+        # fig.savefig("africa.png")
+        st.image("africa.png")
     with o:
-        st.pyplot(plot(oceania, 5))
+        # fig = plt.figure()
+        # plot(asia, 5)
+        # fig.savefig("oceania.png")
+        st.image("oceania.png")
+     
 
 
 

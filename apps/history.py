@@ -199,7 +199,7 @@ def app():
     # dic3 = start(trinity, dic3)
     # dic4 = start(duke, dic4)
     
-    # fig, ax = plt.subplots()
+    # fig = plt.figure(figsize=(5,3))
     # plt.plot(dic4.keys(), dic4.values(), label='Duke', color='#00539B')
     # plt.plot(dic3.keys(), dic3.values(), label='Trinity', color='#FFD960')
     # plt.plot(dic2.keys(), dic2.values(), label='Normal', color='#E89923')
@@ -208,8 +208,19 @@ def app():
     # plt.title("Mentions of Duke's Names over Time")
     # plt.xlabel("Year")
     # plt.ylabel("# of Mentions")
+    # # st.pyplot(fig,use_col)
     # plt.savefig("duke_buildings.png")
-    st.image("duke_buildings.png")
+
+    col1, col2, col3 = st.beta_columns([1,6,1])
+
+    with col1:
+        st.write("")
+
+    with col2:
+        st.image("duke_buildings.png")
+
+    with col3:
+        st.write("")
     
     if st.checkbox("See caveats", key="4"):
         st.write("""*The dates indicate the date the collection that mentions a Duke name was written. Due to inconsistancies in the cataloging dates, we were unable to pull those from the data, and are going off of the date written. For this chart, the start date is used for collections with date ranges.
