@@ -41,10 +41,10 @@ def app():
     
     #---------------------------------------------------------------------------------------------------------------------------------------
     
-    st.subheader("Qualitative Analysis of Presidents")
+    # st.subheader("Qualitative Analysis of Presidents")
     
     st.write("""   
-    Presidents Brodie, Keohane, and Edens were not mentioned in the card catalog. Hart did not have any relevant mentions
+    Presidents Brodie, Keohane, and Edens were not mentioned in the card catalog. Hart did not have any relevant mentions.
     
     On two cards, a Richard Brodhead is mentioned, but not the one who was president of Duke. Upon further inspection, this man was a [U.S. Democratic Senator from Pennsylvania](https://en.wikipedia.org/wiki/Richard_Brodhead). The cards upon which he is mentioned can be viewed [here](https://archive.org/details/rubensteinmanuscriptcatalog_P_to_Peo/page/44/mode/2up) and [here](https://archive.org/details/rubensteinmanuscriptcatalog_Pep_to_Pn/page/n393/mode/2up).
 
@@ -200,10 +200,11 @@ def app():
     # dic4 = start(duke, dic4)
     
     # fig = plt.figure(figsize=(5,3))
-    # plt.plot(dic4.keys(), dic4.values(), label='Duke', color='#00539B')
-    # plt.plot(dic3.keys(), dic3.values(), label='Trinity', color='#FFD960')
-    # plt.plot(dic2.keys(), dic2.values(), label='Normal', color='#E89923')
-    # plt.plot(dic1.keys(), dic1.values(), label='Union', color='#C84E00')
+    # plt.plot(dic4.keys(), dic4.values(), label='Duke')
+    # plt.plot(dic3.keys(), dic3.values(), label='Trinity')
+    # plt.plot(dic2.keys(), dic2.values(), label='Normal')
+    # plt.plot(dic1.keys(), dic1.values(), label='Union')
+    
     # plt.legend(loc='upper left')
     # plt.title("Mentions of Duke's Names over Time")
     # plt.xlabel("Year")
