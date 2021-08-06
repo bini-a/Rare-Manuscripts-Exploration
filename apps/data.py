@@ -13,9 +13,7 @@ import base64
 import streamlit.components.v1 as components
 import neattext as nt 
 from neattext.functions import clean_text
-import pandas_profiling
 import streamlit as st
-from streamlit_pandas_profiling import st_profile_report
 
 
 
