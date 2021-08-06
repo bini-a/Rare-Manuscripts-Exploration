@@ -10,7 +10,7 @@ def app():
     st.title("History")
     st.write("""See the 'Selected Collections' tab to see the Duke Presidents, Building Names, and Early Duke Names in the dataset""")
     st.header("History of Duke Presidents in the Catalog")
-    st.write("""Our first approach for finding presidents was a simple search for their last names. However, most of these occurances were unrealated to the presidents, so for our second approach we looked for both the first and last name appearing together in a card and yielded much better results, shown below.""")
+    # st.write("""Our first approach for finding presidents was a simple search for their last names. However, most of these occurances were unrealated to the presidents, so for our second approach we looked for both the first and last name appearing together in a card and yielded much better results, shown below.""")
     
     #---------------------------------------------------------------------------------------------------------------------------------------
     # Print graph of counts per presidential name
