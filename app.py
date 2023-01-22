@@ -4,7 +4,7 @@ from multiapp import MultiApp
 
 from apps import home, analysis, history, explore_tool, explore_collections
 st.set_page_config(page_title="Rubenstein Library Card Catalog", page_icon="data\img\DUL_logo_blue.jpg",
-                   layout='centered', initial_sidebar_state='auto')
+                   layout='wide', initial_sidebar_state='auto')
 
 
 app = MultiApp()

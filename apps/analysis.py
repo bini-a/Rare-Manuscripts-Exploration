@@ -196,7 +196,7 @@ def app():
     fig = load_gender_pie()
     fig.update_layout(title_x=0.5)
 
-    st.plotly_chart(fig)
+    st.plotly_chart(fg,use_container_width=True)
     if st.checkbox("See caveats",key="2"):
         st.write("""*
         For the above pie chart, we combined "mostly male" names with "male" names and "mostly female" names with female names to more easily visualize the gender frequencies. Androgynous names were dropped for the pie chart's sake, due to the fact they compose only about 0.02% of the names. 
