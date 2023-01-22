@@ -16,18 +16,7 @@ def app():
     # Print graph of counts per presidential name
     last = ["York", "Craven", "Gannaway", "Wood", "Crowell", "Kilgo", "Few", "Flowers", "Edens", "Hart", "Knight", "Sanford", "Brodie", "Keohane", "Brodhead"]
     name_counts = [4, 36, 5, 5, 5, 10, 34, 15, 0, 1, 4, 17, 0, 0, 3]
-    
-    # # Disply bar chart of first and last name occurances
-    # fig, ax = plt.subplots()
-    # plt.bar(last, name_counts, color='#00539B')
-    # plt.xticks(rotation = 45)
-    # plt.title("Occurances of Duke Presidental Names in the Card Catalog")
-    # plt.xlabel("Name")
-    # plt.ylabel("# of Cards")
-    # plt.show()
-    # st.pyplot(fig)
 
-#     "Better to have interactive graph with plotly"
     br =px.bar({"Names":last,"Number of Records":name_counts},x="Names",y="Number of Records")
     st.subheader("Occurances of Duke Presidental Names in the Card Catalog")
     st.plotly_chart(br,use_container_width=True)
@@ -218,7 +207,7 @@ def app():
         st.write("")
 
     with col2:
-        st.image("duke_buildings.png")
+        st.image("data\\img\\duke_buildings.png")
 
     with col3:
         st.write("")
