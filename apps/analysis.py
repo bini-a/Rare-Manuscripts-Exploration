@@ -170,7 +170,7 @@ def app():
         return wordcd(filt_condition)
         
 
-    col1, col2, col3 = st.beta_columns(3)
+    col1, col2, col3 = st.columns(3)
     with col1:
         # gen = gen_wdcloud_condition(1700,1800)
         # fig= plt.figure()
@@ -394,9 +394,9 @@ def app():
         plt.title(titles[i])
         return fig
     titles = ["Europe", "Asia", "North America", "South America", "Africa", "Oceania"]
-    e,asia_c = st.beta_columns(2)
-    n_a,s_a = st.beta_columns(2)
-    a, o = st.beta_columns(2)
+    e,asia_c = st.columns(2)
+    n_a,s_a = st.columns(2)
+    a, o = st.columns(2)
     with e:
         # fig = plt.figure()
         # plot(europe, 0)
