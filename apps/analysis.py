@@ -14,7 +14,7 @@ import streamlit.components.v1 as components
 import neattext as nt 
 from neattext.functions import clean_text
 import streamlit as st
-
+from pathlib import Path
 
 
 def app():
@@ -25,9 +25,13 @@ def app():
     @st.cache
     # Load data
     def load_data():
-        df = pd.read_csv("main_file_dataset.csv")
-        return df
-    df = load_data()
+        df = pd.read_csv("data\main_data.csv")
+        # select only collection heads, with available year
+        df_year = pd.read_csv("data\data_year_avail.csv")
+        # data cleaned and grouped by start year
+        df_grouped = pd.read_csv("data\df_clean_grouped.csv")
+        return df, df_year, df_grouped
+    df , df_year, df_grouped = load_data()
 
 
 
@@ -39,7 +43,8 @@ def app():
         selected_cols = st.multiselect("",columns,default = columns)
         if len(selected_cols) > 0:
             selected_df = df[selected_cols]
-    #         st.dataframe(selected_df)
+            st.dataframe(selected_df)
+            
     # @st.cache
     # def load_profile():
     #     pr = df.profile_report()
@@ -74,9 +79,8 @@ def app():
     we found that our five topics model  work well to have a general overview of the cards.
     """)
     st.markdown("<h5 style='text-align: center;'>Five - Topics Model</h5>", unsafe_allow_html=True)
-
-
-    st.image("topic.png")
+    img_path = 'data\\img\\'
+    st.image(img_path+'topic.png')
     # st.markdown("<p style='color: blue;'>Church & Duke</p>" "p""
    
     # "<p style='color: orange;'>Foreign Affairs</p>" unsafe_allow_html=True)
@@ -130,75 +134,36 @@ def app():
     # plt.axis("off")
     # st.pyplot(fig)
     # plt.savefig("wdcloud-full.png")
-    st.image("wdcloud-full.png")
-
-    def clean(full):
-        # remove punctuation
-        full_no_punc = re.sub(r"\.|!", "",full)
-        
-        # Select only those longer than 1
-        full_no_punc = " ".join([i for i in full_no_punc.split() if len(i)>1])
-
-        # Tokenize
-        text_tokens = nt.TextFrame(full_no_punc).word_tokens()
-
-        # Change to lower case and select only alphanumeric
-        pre_process = [i.lower() for i in text_tokens if i.isalpha()]
-
-        # Remove Stop Words,# remove_single_characters
-        token_no_stopword = [word for word in pre_process if word not in my_stopword]
-    # 
-        filtered_sentence = (" ").join(token_no_stopword)
-        return filtered_sentence
+    st.image(img_path+"wdcloud-full.png")
 
     @st.cache
-    def get_year_df(df):
-        # Start date precedes end date
-        df_year = df[df.Start<df.End]
-        # Select records with start year of 1700
-        df_year = df_year[(df_year.Start>1700) & (df_year.End>1700) ]
-        # New dataframe with cleaned column
-        df_set_year = df_year.groupby(["Start"])["Text"].apply(" ".join).reset_index()
-        df_set_year["Clean"] = df_set_year["Text"].apply(clean)
-        return df_set_year
-    df_set_year = get_year_df(df)
-    
-    @st.cache(allow_output_mutation=True)
-    def gen_wdcloud_condition(start_date,end_date):
-        condition =(df_set_year.Start>=start_date) & (df_set_year.Start<=end_date)
-        filt_condition = " ".join(df_set_year[condition].Clean.tolist())
-        return wordcd(filt_condition)
-        
+    def generate_wdcloud(start_date,end_date):
+        condition =(df_grouped.Start>=start_date) & (df_grouped.Start<=end_date)
+        clean_text = " ".join(df_grouped[condition].Clean.tolist())
+        wordcloud = WordCloud(background_color="white", width=3000, height=2000, max_words=100,
+        collocations=True,prefer_horizontal=1).generate(clean_text)
+        return wordcloud
 
     col1, col2, col3 = st.columns(3)
+    @st.cache 
+    def plot_wd(start_year, end_date):
+        gen = generate_wdcloud(1700,1800)
+        fig= plt.figure()
+        plt.imshow(gen)
+        plt.title("Word Cloud for {}".format("1700-1800"),pad=20,fontsize=20)
+        plt.axis("off")
+        # plt.savefig(start_year + " - " + end_date)
+        st.pyplot(fig)    
+           
     with col1:
-        # gen = gen_wdcloud_condition(1700,1800)
-        # fig= plt.figure()
-        # plt.imshow(gen)
-        # plt.title("Word Cloud for {}".format("1700-1800"),pad=20,fontsize=20)
-        # plt.axis("off")
-        # plt.savefig("wdcld-1.png")
-        # st.pyplot(fig)
-        st.image("wdcld-1.png")
+        # plot_wd(1700,1800)
+        st.image(img_path+"wdcld-1.png")
     with col2:
-        # gen = gen_wdcloud_condition(1800,1900)
-        # fig= plt.figure()
-        # plt.imshow(gen)
-        # plt.title("Word Cloud for {}".format("1800-1900"),pad=20,fontsize=20)
-        # plt.axis("off")        
-        # plt.savefig("wdcld-2.png")
-        # st.pyplot(fig)
-        st.image("wdcld-2.png")
-
-    with col3:
-        # gen = gen_wdcloud_condition(1861,1865)
-        # fig= plt.figure()
-        # plt.imshow(gen)
-        # plt.title("Word Cloud for {}".format("1861-1865 Civil War Period"),pad=20,fontsize=20)
-        # plt.axis("off")
-        # plt.savefig("wdcld-3.png")
-        # st.pyplot(fig)
-        st.image("wdcld-3.png",)
+        # plot_wd(1800,1900)
+        st.image(img_path+"wdcld-2.png")
+    with col3:      
+        # plot_wd(1861,1865)
+        st.image(img_path+"wdcld-3.png",)
     if st.checkbox("See caveats"):
         st.write("""*The three word clouds generated are based on the entries which 
         have dates (and our algorithm was able to pick up).
@@ -216,7 +181,7 @@ def app():
         Mostly male and mostly female result from names that are less cut and dry in regards to the gender they are associated with. Androgynous, means that a name is not traditionally strongly associated with either gender and unknown means that the package was unable to classify a name into any of the other categories. 
         These tended to be non-person organizations or places that would not have a gender and thus were dropped for the visualizations of the results.
         """)
-    st.image("gender.png")
+    st.image(img_path+"gender.png")
     st.markdown("""
     As shown in the above bar chart, the names of the authors present in the library's card collection are overwhelmingly male. This comes as no suprise to anyone who has looked through the cards. Something else of note is the strong presence of binarily gendered names i.e., there are very few "mostly male" or "mostly female" names (and seldom an androgynous one), most are one or the other. Perhaps this
     is indicative of the kinds of names that were given during the time period represented in the cards.
@@ -244,23 +209,11 @@ def app():
     st.header("Time Distribution")
 
     @st.cache
-    def load_year_fig():
-
-
-        # select only collection heads, with available year
-        df_year = df[~df.Collection_Head.isnull()]
-        df_year = df_year[~df_year.Year.isnull()]
-        df_year = df_year[~df_year.Start.isnull()]
-        #convert to numeric
-        df_year.Start = pd.to_numeric(df_year.Start)
-        df_year.End = pd.to_numeric(df_year.End)
-        # select appropriate dates
-        df_year = df_year[df_year.Start<df_year.End]
-        df_year = df_year[(df_year.Start>1700) & (df_year.End>1700)]
+    def plot_year_fig():
         fg = px.histogram(df_year,x="Start")
         fg.update_layout(title_text="Number of Records vs Time", title_x=0.5)
         return fg
-    fg = load_year_fig()
+    fg = plot_year_fig()
     st.plotly_chart(fg)
     st.markdown("""
     The visualization below shows that most of the card entries are from the 19th century.
@@ -273,12 +226,6 @@ def app():
         this visualization only takes into account entries which are written after 1700.
         *""")
 
-
-    # opitional start and end time simultaneous visualization
-    # fg = px.histogram(df_year,x=["Start","End"])
-    # fg.update_layout(title_text="Number of Records vs Time (Start and End Date)", title_x=0.5)
-    # st.plotly_chart(fg)
-
     st.header("Spatial Distribution")
 
     st.write("""
@@ -288,10 +235,6 @@ def app():
         
     st.subheader("USA Spatial Frequency of Card Catalog Manuscripts")
 
-#     fig = px.choropleth(locations=['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'], locationmode="USA-states", color=[153, 0, 1, 16, 11, 3, 76, 5, 43, 17, 371, 1, 0, 25, 21, 13, 3, 53, 71, 11, 218, 169, 12, 3, 63, 33, 0, 3, 0, 22, 17, 6, 302, 1188, 1, 63, 3, 2, 193, 19, 299, 0, 81, 22, 4, 13, 1631, 5, 48, 3, 1], scope="usa", hover_name=['Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','District of Columbia','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West Virginia','Wisconsin','Wyoming',], color_continuous_scale="YlGnBu", labels={'color':'Count', 'locations':'State Abrev.'})
-#     st.plotly_chart(fig,use_container_width=True)
-
-#     st.header("Alternative display")
     lc =['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY']
     txt =['Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','District of Columbia','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West Virginia','Wisconsin','Wyoming']
     fig = px.choropleth(locations=['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'],
@@ -339,7 +282,7 @@ def app():
 
     st.subheader("NC County Spatial Frequency of Card Catalog Manuscripts")
     
-    st.image("nc_map.png")
+    st.image(img_path+"nc_map.png")
     st.markdown("""
     When we add up all the county collection counts up, we get 551 cards cataloging collections that are specifically from North Carolina counties. 
     There are a lot of cards from Durham County because the Rubenstein Library is located
@@ -353,7 +296,7 @@ def app():
     """)
     @st.cache 
     def load_world_map():
-        world = pd.read_csv("world.csv")
+        world = pd.read_csv("data\\world.csv")
         fig = px.choropleth(world, locations='iso', color='count', hover_name="hover_name", color_continuous_scale=px.colors.sequential.Plasma)
         return fig 
     fig = load_world_map()
@@ -362,17 +305,15 @@ def app():
     
     colors = ['#C84E00', '#E89923', '#FFD960', '#A1B70D', '#339898', '#993399']
     @st.cache
-    def international_pie():
+    def international_piechart():
         fig = go.Figure(data=[go.Pie(labels=['Europe', 'Asia', 'North America', 'South America', 'Africa', 'Oceania'], values=[197, 70, 20, 16, 12, 3])])
         fig.update_traces(hoverinfo='label+percent', textinfo='value', textfont_size=20,
                   marker=dict(colors=colors, line=dict(color='#000000', width=2)))
         return fig
-    fig = international_pie()
+    fig = international_piechart()
     st.plotly_chart(fig,use_container_width=True)
     st.markdown("The above visualizations compare the quantities of international card collection between and within continents. We have cards hailing from every continent, save Antarctica! ")
 
-    # @st.cache()
-    # def continent
     europe = {'Austria': 3, 'Belgium': 1, 'Denmark': 4, 'England': 63, 'France': 47, 'Germany': 30, 'Greece': 3, 'Ireland': 5, 
     'Italy': 3, 'Malta': 2, 'Poland': 4, 'San Marino': 1,'Spain': 22, 'Sweden': 2, 'Switzerland': 5, 'Wales': 2}
 
@@ -401,76 +342,31 @@ def app():
         # fig = plt.figure()
         # plot(europe, 0)
         # fig.savefig("europe.png")
-        st.image("europe.png")
+        st.image(img_path+"europe.png")
     with asia_c:
         # fig = plt.figure()
         # plot(asia, 1)
         # fig.savefig("asia.png")
-        st.image("asia.png")
+        st.image(img_path+"asia.png")
     with n_a:
         # fig = plt.figure()
         # plot(north_america, 2)
         # fig.savefig("north_america.png")
-        st.image("north_america.png")
+        st.image(img_path+"north_america.png")
     with s_a:
         # fig = plt.figure()
         # plot(south_america, 3)
         # fig.savefig("south_america.png")
-        st.image("south_america.png")
+        st.image(img_path+"south_america.png")
     with a:
         # fig = plt.figure()
         # plot(asia, 4)
         # fig.savefig("africa.png")
-        st.image("africa.png")
+        st.image(img_path+"africa.png")
     with o:
         # fig = plt.figure()
         # plot(asia, 5)
         # fig.savefig("oceania.png")
-        st.image("oceania.png")
-     
-
-
-
-
-
-
-
-    # st.subheader("Generate Wordcloud")
-    # values = st.slider("Choose time range to generate your own word-cloud", min_value=1700,max_value=1950,value=(1700,1800))
-    # wd_title = f"{int(values[0])}-{int(values[1])}"
-    # fig2= plt.figure(figsize=(15,5))
-    # generate = gen_wdcloud_condition(values[0],values[1])
-    # plt.imshow(generate)
-    # plt.title("Word Cloud for {}".format(wd_title),pad=20,fontsize=20)
-    # plt.axis("off")
-    # st.pyplot(fig2)
-    
-
-
-    # @st.cache(allow_output_mutation=True)
-    # def generate_report(df):
-    #     return ProfileReport(df, explorative=True,minimal=True)
-    # if st.checkbox('Show Profiling Report on Dataset'):
-    #     # output = generate_report(df).to_file('output.html', silent=False)
-    #     # st.markdown("output.html",unsafe_allow_html=True)
-    #     HtmlFile = open("output.html", 'r', encoding='utf-8')
-    #     source_code = HtmlFile.read() 
-    #     # print(source_code)
-    #     components.iframe("../output.html")
-
-
-        # st_profile_report(generate_report(df))
-
-
-
-
-
-
-
-
-
-
-
-    
-
-# app()
+        st.image(img_path+"oceania.png")
+        
+        
