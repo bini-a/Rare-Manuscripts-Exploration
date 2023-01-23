@@ -26,11 +26,11 @@ def app():
     @st.cache
     # Load data
     def load_data():
-        df = pd.read_csv(home_dir/"data\main_data.csv")
+        df = pd.read_csv(home_dir/"data/main_data.csv")
         # select only collection heads, with available year
-        df_year = pd.read_csv(home_dir/"data\data_year_avail.csv")
+        df_year = pd.read_csv(home_dir/"data/data_year_avail.csv")
         # data cleaned and grouped by start year
-        df_grouped = pd.read_csv(home_dir/"data\df_clean_grouped.csv")
+        df_grouped = pd.read_csv(home_dir/"data/df_clean_grouped.csv")
         return df, df_year, df_grouped
     # df , df_year, df_grouped = load_data()
     df = pd.DataFrame()

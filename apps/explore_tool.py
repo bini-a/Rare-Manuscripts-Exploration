@@ -33,9 +33,9 @@ def app():
         # load main dataset
         df = pd.read_csv(home_dir/"data/main_data.csv")
         # select only collection heads, with available year
-        df_year = pd.read_csv(home_dir/"data\data_year_avail.csv")
+        df_year = pd.read_csv(home_dir/"data/data_year_avail.csv")
         # data cleaned and grouped by start year
-        df_grouped = pd.read_csv(home_dir/"data\df_clean_grouped.csv")
+        df_grouped = pd.read_csv(home_dir/"data/df_clean_grouped.csv")
         # Continent to country dictionary
         # Drawer to page number dictionary
         with open('data\continent_country.pkl', 'rb') as f:

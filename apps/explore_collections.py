@@ -9,9 +9,9 @@ def app():
     # Load data
     def load_data():
         # load main data
-        df = pd.read_csv(home_dir/"data\main_data.csv")
+        df = pd.read_csv(home_dir/"data/main_data.csv")
         # load collection info data
-        with open('data\collection_dict.pkl', 'rb') as f:
+        with open('data/collection_dict.pkl', 'rb') as f:
             collection = pickle.load(f)
         return df, collection
     df , collection = load_data()
