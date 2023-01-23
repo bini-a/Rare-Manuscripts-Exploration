@@ -5,7 +5,9 @@ import re
 from scipy import stats
 import operator
 import plotly.express as px
-
+from pathlib import Path
+home_dir = Path(__file__).parents[1]
+  
 def app():
     st.title("History")
     st.write("""See the 'Selected Collections' tab to see the Duke Presidents, Building Names, and Early Duke Names in the dataset""")
@@ -182,32 +184,14 @@ def app():
                 dic[int(dates[0])] = dic.get(int(dates[0])) + 1
         return dic
     
-    # dic1, dic2, dic3, dic4 = {}, {}, {}, {}
-    # dic1 = start(union, dic1)
-    # dic2 = start(normal, dic2)
-    # dic3 = start(trinity, dic3)
-    # dic4 = start(duke, dic4)
-    
-    # fig = plt.figure(figsize=(5,3))
-    # plt.plot(dic4.keys(), dic4.values(), label='Duke')
-    # plt.plot(dic3.keys(), dic3.values(), label='Trinity')
-    # plt.plot(dic2.keys(), dic2.values(), label='Normal')
-    # plt.plot(dic1.keys(), dic1.values(), label='Union')
-    
-    # plt.legend(loc='upper left')
-    # plt.title("Mentions of Duke's Names over Time")
-    # plt.xlabel("Year")
-    # plt.ylabel("# of Mentions")
-    # # st.pyplot(fig,use_col)
-    # plt.savefig("duke_buildings.png")
-
     col1, col2, col3 = st.columns([1,6,1])
 
     with col1:
         st.write("")
 
     with col2:
-        st.image("data\\img\\duke_buildings.png")
+        # st.image(home_dir/"data\\img\\duke_buildings.png")
+        st.write("")
 
     with col3:
         st.write("")

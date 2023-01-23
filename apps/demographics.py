@@ -3,7 +3,8 @@ import pandas as pd
 import plotly.express as px
 import  matplotlib.pyplot as plt
 import seaborn as sns
-
+from pathlib import Path
+home_dir = Path(__file__).parents[1]
 def app():
     st.title("Demographics")
     st.write(""" 
@@ -15,7 +16,7 @@ def app():
     @st.cache
     # Load data
     def load_data():
-        df = pd.read_csv("main_file_dataset.csv")
+        df = pd.read_csv(home_dir/"data/main_data.csv")
         return df
     df = load_data()
     df_gender = df[(df.Author_Identity=="Male")| (df.Author_Identity=="Female")]

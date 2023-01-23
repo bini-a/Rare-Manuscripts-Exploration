@@ -6,7 +6,6 @@ import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 from wordcloud import WordCloud, ImageColorGenerator
-import re
 from num2words import num2words
 import gender_guesser.detector as gender
 import base64
@@ -15,7 +14,8 @@ import neattext as nt
 from neattext.functions import clean_text
 import streamlit as st
 from pathlib import Path
-
+home_dir = Path(__file__).parents[1]
+img_dir = Path(__file__).parents[0]
 
 def app():
     st.markdown(""" <style> .font {
@@ -25,11 +25,11 @@ def app():
     @st.cache
     # Load data
     def load_data():
-        df = pd.read_csv("data\main_data.csv")
+        df = pd.read_csv(home_dir/"data\main_data.csv")
         # select only collection heads, with available year
-        df_year = pd.read_csv("data\data_year_avail.csv")
+        df_year = pd.read_csv(home_dir/"data\data_year_avail.csv")
         # data cleaned and grouped by start year
-        df_grouped = pd.read_csv("data\df_clean_grouped.csv")
+        df_grouped = pd.read_csv(home_dir/"data\df_clean_grouped.csv")
         return df, df_year, df_grouped
     df , df_year, df_grouped = load_data()
 
@@ -79,8 +79,7 @@ def app():
     we found that our five topics model  work well to have a general overview of the cards.
     """)
     st.markdown("<h5 style='text-align: center;'>Five - Topics Model</h5>", unsafe_allow_html=True)
-    img_path = 'data\\img\\'
-    st.image(img_path+'topic.png')
+    st.image(home_dir/r"data\img\topic.png")
     # st.markdown("<p style='color: blue;'>Church & Duke</p>" "p""
    
     # "<p style='color: orange;'>Foreign Affairs</p>" unsafe_allow_html=True)
@@ -134,7 +133,7 @@ def app():
     # plt.axis("off")
     # st.pyplot(fig)
     # plt.savefig("wdcloud-full.png")
-    st.image(img_path+"wdcloud-full.png")
+    st.image(home_dir/img_path+"wdcloud-full.png")
 
     @st.cache
     def generate_wdcloud(start_date,end_date):
@@ -157,13 +156,13 @@ def app():
            
     with col1:
         # plot_wd(1700,1800)
-        st.image(img_path+"wdcld-1.png")
+        st.image(home_dir/img_path+"wdcld-1.png")
     with col2:
         # plot_wd(1800,1900)
-        st.image(img_path+"wdcld-2.png")
+        st.image(home_dir/img_path+"wdcld-2.png")
     with col3:      
         # plot_wd(1861,1865)
-        st.image(img_path+"wdcld-3.png",)
+        st.image(home_dir/img_path+"wdcld-3.png",)
     if st.checkbox("See caveats"):
         st.write("""*The three word clouds generated are based on the entries which 
         have dates (and our algorithm was able to pick up).
@@ -181,7 +180,7 @@ def app():
         Mostly male and mostly female result from names that are less cut and dry in regards to the gender they are associated with. Androgynous, means that a name is not traditionally strongly associated with either gender and unknown means that the package was unable to classify a name into any of the other categories. 
         These tended to be non-person organizations or places that would not have a gender and thus were dropped for the visualizations of the results.
         """)
-    st.image(img_path+"gender.png")
+    st.image(home_dir/img_path+"gender.png")
     st.markdown("""
     As shown in the above bar chart, the names of the authors present in the library's card collection are overwhelmingly male. This comes as no suprise to anyone who has looked through the cards. Something else of note is the strong presence of binarily gendered names i.e., there are very few "mostly male" or "mostly female" names (and seldom an androgynous one), most are one or the other. Perhaps this
     is indicative of the kinds of names that were given during the time period represented in the cards.
@@ -282,7 +281,7 @@ def app():
 
     st.subheader("NC County Spatial Frequency of Card Catalog Manuscripts")
     
-    st.image(img_path+"nc_map.png")
+    st.image(home_dir/img_path+"nc_map.png")
     st.markdown("""
     When we add up all the county collection counts up, we get 551 cards cataloging collections that are specifically from North Carolina counties. 
     There are a lot of cards from Durham County because the Rubenstein Library is located
@@ -296,7 +295,7 @@ def app():
     """)
     @st.cache 
     def load_world_map():
-        world = pd.read_csv("data\\world.csv")
+        world = pd.read_csv(home_dir/"data\\world.csv")
         fig = px.choropleth(world, locations='iso', color='count', hover_name="hover_name", color_continuous_scale=px.colors.sequential.Plasma)
         return fig 
     fig = load_world_map()
@@ -342,31 +341,31 @@ def app():
         # fig = plt.figure()
         # plot(europe, 0)
         # fig.savefig("europe.png")
-        st.image(img_path+"europe.png")
+        st.image(home_dir/img_path+"europe.png")
     with asia_c:
         # fig = plt.figure()
         # plot(asia, 1)
         # fig.savefig("asia.png")
-        st.image(img_path+"asia.png")
+        st.image(home_dir/img_path+"asia.png")
     with n_a:
         # fig = plt.figure()
         # plot(north_america, 2)
         # fig.savefig("north_america.png")
-        st.image(img_path+"north_america.png")
+        st.image(home_dir/img_path+"north_america.png")
     with s_a:
         # fig = plt.figure()
         # plot(south_america, 3)
         # fig.savefig("south_america.png")
-        st.image(img_path+"south_america.png")
+        st.image(home_dir/img_path+"south_america.png")
     with a:
         # fig = plt.figure()
         # plot(asia, 4)
         # fig.savefig("africa.png")
-        st.image(img_path+"africa.png")
+        st.image(home_dir/img_path+"africa.png")
     with o:
         # fig = plt.figure()
         # plot(asia, 5)
         # fig.savefig("oceania.png")
-        st.image(img_path+"oceania.png")
+        st.image(home_dir/img_path+"oceania.png")
         
         

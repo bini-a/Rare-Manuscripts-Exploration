@@ -1,13 +1,17 @@
 
 import streamlit as st
 from multiapp import MultiApp
-
+from pathlib import Path
 from apps import home, analysis, history, explore_tool, explore_collections
-st.set_page_config(page_title="Rubenstein Library Card Catalog", page_icon="data\img\DUL_logo_blue.jpg",
+# loc = Path(__file__).parents[1] / 'rlapp/data/img/DUL_logo_blue.jpg'
+# st.write(loc)
+# home_dir = Path(__file__).parents[1] 
+st.set_page_config(page_title="Rubenstein Library Card Catalog", page_icon= "data/img/DUL_logo_blue.jpg",
                    layout='wide', initial_sidebar_state='auto')
 
 
 app = MultiApp()
+# home_dir = Path(__file__).parents[1] / 'data/main_data.csv'
 
 
 app.add_app("Home", home.app)

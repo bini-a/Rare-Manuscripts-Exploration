@@ -2,12 +2,14 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import pickle
+from pathlib import Path
+home_dir = Path(__file__).parents[1]
 def app():
     @st.cache
     # Load data
     def load_data():
         # load main data
-        df = pd.read_csv("data\main_data.csv")
+        df = pd.read_csv(home_dir/"data\main_data.csv")
         # load collection info data
         with open('data\collection_dict.pkl', 'rb') as f:
             collection = pickle.load(f)
