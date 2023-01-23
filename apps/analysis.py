@@ -73,14 +73,6 @@ def app():
     
     st.image("data/img/topic.png")
 
-    
-    # st.markdown("<p style='color: blue;'>Church & Duke</p>" "p""
-   
-    # "<p style='color: orange;'>Foreign Affairs</p>" unsafe_allow_html=True)
-    # "<p style='color: green;'>Domestic Politics</p>", unsafe_allow_html=True)
-    # "<p style='color: red;'>Civil war</p>", unsafe_allow_html=True)
-    # "<p style='color: purple;'>Business</p>", unsafe_allow_html=True)
-
 
     st.markdown("""
     The topics are <font color="blue">Church & Duke</font> , <font color="orange">Foreign Affairs</font>,
@@ -95,11 +87,7 @@ def app():
     This modeling gives us a brief overview of what kind of topics to explore in the dataset. 
     Futher visualizations like word-clouds add insight to the most discussed topics in the card catalogues.
     """,unsafe_allow_html=True)
-       # Topic 0 -  Church & Duke   
-    # Topic 1 -  Foreign Affairs  
-    # Topic 2 -  Domestic Politics   
-    # Topic 3  - Civil war  
-    # Topic 4  - Business
+
     @st.cache
     def create_stopwords():
         change_dict = {"variou":"various","thoma":"thomas","thomass":"thomas","united state":"united states","variouss":"various"}
@@ -189,7 +177,7 @@ def app():
     fig = load_gender_pie()
     fig.update_layout(title_x=0.5)
 
-    st.plotly_chart(fg,use_container_width=True)
+    st.plotly_chart(fig,use_container_width=True)
     if st.checkbox("See caveats",key="2"):
         st.write("""*
         For the above pie chart, we combined "mostly male" names with "male" names and "mostly female" names with female names to more easily visualize the gender frequencies. Androgynous names were dropped for the pie chart's sake, due to the fact they compose only about 0.02% of the names. 

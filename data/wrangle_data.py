@@ -97,12 +97,16 @@ collection_dict["civil_war"] = [14, 15, 113, 181, 200, 285, 287, 297, 351, 354, 
 
 
 # save 
-df_year.to_csv("data_year_avail.csv", index=False)
-df_grouped.to_csv("df_clean_grouped.csv", index=False)
+# df_year.to_csv("data_year_avail.csv", index=False)
+# df_grouped.to_csv("df_clean_grouped.csv", index=False)
 
-with open('continent_country.pkl', 'wb') as f:
-    pickle.dump(continent_country, f)
-with open('drawer_dict.pkl', 'wb') as f:
-    pickle.dump(drawer_dict, f)         
-with open('collection_dict.pkl', 'wb') as f:
-    pickle.dump(collection_dict, f)    
+# with open('continent_country.pkl', 'wb') as f:
+#     pickle.dump(continent_country, f)
+# with open('drawer_dict.pkl', 'wb') as f:
+#     pickle.dump(drawer_dict, f)         
+# with open('collection_dict.pkl', 'wb') as f:
+#     pickle.dump(collection_dict, f)   
+
+print(continent_country)
+print("-------------") 
+print(collection_dict)

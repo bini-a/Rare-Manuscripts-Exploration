@@ -38,10 +38,8 @@ def app():
         df_grouped = pd.read_csv(home_dir/"data/df_clean_grouped.csv")
         # Continent to country dictionary
         # Drawer to page number dictionary
-        with open('data/continent_country.pkl', 'rb') as f:
-            continent_country = pickle.load(f)
-        with open('data/drawer_dict.pkl', 'rb') as f:
-            drawer_dict = pickle.load(f)
+        continent_country = pd.read_pickle('data/continent_country.pkl')
+        drawer_dict = pd.read_pickle('data/drawer_dict.pkl')
         return df, df_year, df_grouped, continent_country, drawer_dict 
     df, df_year,df_grouped, continent_country, drawer_dict = load_data()
 
