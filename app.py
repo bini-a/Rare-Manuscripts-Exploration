@@ -14,11 +14,11 @@ app = MultiApp()
 # home_dir = Path(__file__).parents[1] / 'data/main_data.csv'
 
 
-app.add_app("Home", home.app)
+# app.add_app("Home", home.app)
 app.add_app("Filter and Explore", explore_tool.app)
-app.add_app("Selected Collections", explore_collections.app)
+# app.add_app("Selected Collections", explore_collections.app)
 app.add_app("Data Analysis", analysis.app)
-app.add_app("Duke History", history.app)
+# app.add_app("Duke History", history.app)
 
 # The main app
 app.run()
