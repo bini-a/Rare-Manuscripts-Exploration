@@ -190,8 +190,7 @@ def app():
         st.write("")
 
     with col2:
-        # st.image(home_dir/"data\\img\\duke_buildings.png")
-        st.write("")
+        st.image("data/img/duke_buildings.png", width = 1000)
 
     with col3:
         st.write("")
