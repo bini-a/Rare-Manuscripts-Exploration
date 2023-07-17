@@ -1,4 +1,4 @@
-# rlapp
+# Rare Manuscripts Exploration Web App
 
 Visit the Web App Built using Streamlit  [here](https://bini-a-rlapp-app-wr9dr6.streamlit.app/)
 
